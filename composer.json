@@ -1,25 +1,28 @@
 {
-    "name": "helhum/ext-scaffold",
+    "name": "oliverklee/csv_to_openimmo",
+    "description": "CSV-to-OpenImmo converter",
     "type": "typo3-cms-extension",
-    "description": "Extension skeleton for TYPO3 7 and 8",
     "keywords": [
         "TYPO3",
         "extension",
-        "scaffold"
+        "openimmo",
+        "csv"
     ],
-    "homepage": "http://helhum.io",
-    "support": {
-        "issues": "https://github.com/helhum/ext_scaffold/issues"
-    },
+    "homepage": "https://www.oliverklee.de/",
+    "license": "GPL-3.0-or-later",
     "authors": [
         {
-            "name": "Helmut Hummel",
-            "email": "info@helhum.io",
-            "role": "Developer",
-            "homepage": "http://helhum.io"
+            "name": "Oliver Klee",
+            "email": "typo3-coding@oliverklee.de",
+            "homepage": "https://www.oliverklee.de",
+            "role": "developer"
         }
     ],
-    "license": "GPL-3.0-or-later",
+    "support": {
+        "source": "https://github.com/oliverklee/ext-csv_to_openimmo",
+        "issues": "https://github.com/oliverklee/ext-csv_to_openimmo/issues"
+    },
+
     "require": {
         "typo3/cms-core": "^7.6.23 || ^8.7.9",
         "typo3/cms-fluid": "^7.6.23 || ^8.7.9",
@@ -29,20 +32,29 @@
         "nimut/testing-framework": "^2.0",
         "helhum/typo3-composer-setup": "^0.5.1"
     },
+    "replace": {
+        "csv_to_openimmo": "self.version",
+        "typo3-ter/ext-csv_to_openimmo": "self.version"
+    },
+    "suggest": {
+        "oliverklee/realty": "*"
+    },
     "autoload": {
         "psr-4": {
-            "Helhum\\ExtScaffold\\": "Classes/"
+            "OliverKlee\\CsvToOpenImmo\\": "Classes/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Helhum\\ExtScaffold\\Tests\\": "Tests/"
+            "OliverKlee\\CsvToOpenImmo\\Tests\\": "Tests/"
         }
     },
-    "replace": {
-        "ext_scaffold": "self.version",
-        "typo3-ter/ext-scaffold": "self.version"
-    },
+    "repositories": [
+        {
+            "type": "composer",
+            "url": "https://composer.typo3.org/"
+        }
+    ],
     "config": {
         "vendor-dir": ".Build/vendor"
     },
@@ -53,7 +65,7 @@
         ],
         "link-extension": [
             "@php -r 'is_dir($extFolder=__DIR__.\"/.Build/public/typo3conf/ext/\") || mkdir($extFolder, 0777, true);'",
-            "@php -r 'file_exists($extFolder=__DIR__.\"/.Build/public/typo3conf/ext/ext_scaffold\") || symlink(__DIR__,$extFolder);'"
+            "@php -r 'file_exists($extFolder=__DIR__.\"/.Build/public/typo3conf/ext/csv_to_openimmo\") || symlink(__DIR__,$extFolder);'"
         ],
         "post-autoload-dump": [
             "@link-extension"
