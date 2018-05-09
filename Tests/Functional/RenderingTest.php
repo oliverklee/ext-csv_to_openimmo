@@ -1,5 +1,5 @@
 <?php
-namespace Helhum\ExtScaffold\Tests\Functional;
+namespace OliverKlee\CsvToOpenImmo\Tests\Functional;
 
 /***************************************************************
  *  Copyright notice
@@ -29,20 +29,21 @@ namespace Helhum\ExtScaffold\Tests\Functional;
 
 use Nimut\TestingFramework\Http\Response;
 use Nimut\TestingFramework\TestCase\FunctionalTestCase;
+use PHPUnit\Util\PHP\AbstractPhpProcess;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
- * Class RenderingTest
+ * Test case.
  */
 class RenderingTest extends FunctionalTestCase
 {
     /**
-     * @var array
+     * @var string[]
      */
-    protected $testExtensionsToLoad = ['typo3conf/ext/ext_scaffold'];
+    protected $testExtensionsToLoad = ['typo3conf/ext/csv_to_openimmo'];
 
     /**
-     * @var array
+     * @var string[]
      */
     protected $coreExtensionsToLoad = ['fluid'];
 
@@ -58,14 +59,16 @@ class RenderingTest extends FunctionalTestCase
      */
     public function emailViewHelperWorksWithSpamProtection()
     {
+        static::markTestIncomplete('Nothing to do here yet.');
+
         $requestArguments = ['id' => '1'];
         $expectedContent = '<a href="javascript:linkTo_UnCryptMailto(\'ocknvq,kphqBjgnjwo0kq\');">info(AT)helhum(DOT)io</a>' . chr(10);
-        $this->assertSame($expectedContent, $this->fetchFrontendResponse($requestArguments)->getContent());
+        static::assertSame($expectedContent, $this->fetchFrontendResponse($requestArguments)->getContent());
     }
 
-    /* ***************
+    /*
      * Utility methods
-     * ***************/
+     */
 
     /**
      * @param array $requestArguments
@@ -95,7 +98,7 @@ class RenderingTest extends FunctionalTestCase
             ]
         );
 
-        $php = \PHPUnit_Util_PHP::factory();
+        $php = AbstractPhpProcess::factory();
         $response = $php->runJob($template->render());
         $result = json_decode($response['stdout'], true);
 
