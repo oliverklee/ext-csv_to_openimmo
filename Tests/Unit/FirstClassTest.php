@@ -1,9 +1,12 @@
 <?php
-namespace Helhum\ExtScaffold\Tests\Unit;
+namespace OliverKlee\CsvToOpenImmo\Tests\Unit;
 
-use Helhum\ExtScaffold\Tests\Unit\Fixtures\LoadableClass;
-use TYPO3\CMS\Core\Tests\UnitTestCase;
+use Nimut\TestingFramework\TestCase\UnitTestCase;
+use OliverKlee\CsvToOpenImmo\Tests\Unit\Fixtures\LoadableClass;
 
+/**
+ * Test case.
+ */
 class FirstClassTest extends UnitTestCase
 {
     /**
@@ -12,14 +15,6 @@ class FirstClassTest extends UnitTestCase
     public function methodReturnsTrue()
     {
         $firstClassObject = new LoadableClass();
-        $this->assertTrue($firstClassObject->returnsTrue());
-    }
-
-    /**
-     * @test
-     */
-    public function viewHelperBaseClassIsLoadable()
-    {
-        $this->assertTrue(class_exists('TYPO3\\CMS\\Fluid\\Tests\\Unit\\ViewHelpers\\ViewHelperBaseTestcase'));
+        static::assertTrue($firstClassObject->returnsTrue());
     }
 }

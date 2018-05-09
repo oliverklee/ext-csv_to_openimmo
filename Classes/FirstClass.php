@@ -1,5 +1,5 @@
 <?php
-namespace Helhum\ExtScaffold;
+namespace OliverKlee\CsvToOpenImmo;
 
 class FirstClass
 {

@@ -1,5 +1,5 @@
 <?php
-namespace Helhum\ExtScaffold\Tests\Unit\Fixtures;
+namespace OliverKlee\CsvToOpenImmo\Tests\Unit\Fixtures;
 
 class LoadableClass
 {
