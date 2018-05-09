@@ -1,33 +1,22 @@
 <?php
 $EM_CONF[$_EXTKEY] = array(
-  'title' => 'Scaffold extension',
-  'description' => 'Extension skeleton for TYPO3 7 and 8',
-  'category' => 'Example Extensions',
-  'author' => 'Helmut Hummel',
-  'author_email' => 'info@helhum.io',
-  'author_company' => 'helhum.io',
-  'shy' => '',
-  'priority' => '',
-  'module' => '',
-  'state' => 'stable',
-  'internal' => '',
-  'uploadfolder' => '0',
-  'createDirs' => '',
-  'modify_tables' => '',
-  'clearCacheOnLoad' => 0,
-  'lockType' => '',
-  'version' => '0.2.0',
-  'constraints' =>
-  array(
-    'depends' =>
-    array(
-      'typo3' => '7.6.0-8.7.99',
-    ),
-    'conflicts' =>
-    array(
-    ),
-    'suggests' =>
-    array(
-    ),
-  ),
+    'title' => 'CSV-to-OpenImmo converter',
+    'description' => 'This extension provides a Scheduler task that reads zipped CSV files from a configured folder and writes zipped OpenImmo files to another configured folder. The task will also copy all image files and PDF from the ZIPs.',
+    'category' => 'module',
+    'author' => 'Oliver Klee',
+    'author_email' => 'typo3-coding@oliverklee.de',
+    'author_company' => 'oliverklee.de',
+    'state' => 'stable',
+    'version' => '0.1.0',
+    'constraints' =>
+        array(
+            'depends' =>
+                array(
+                    'typo3' => '7.6.0-8.7.99',
+                ),
+            'conflicts' =>
+                array(),
+            'suggests' =>
+                array(),
+        ),
 );
