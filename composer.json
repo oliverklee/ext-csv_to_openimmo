@@ -31,7 +31,7 @@
         "typo3/cms-frontend": "^6.2.30 || ^7.6.23 "
     },
     "require-dev": {
-        "nimut/testing-framework": "^2.0",
+        "nimut/testing-framework": "^3.0",
         "helhum/typo3-composer-setup": "^0.5.1"
     },
     "replace": {
