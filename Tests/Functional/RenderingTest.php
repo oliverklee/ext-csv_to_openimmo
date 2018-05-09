@@ -39,18 +39,18 @@ class RenderingTest extends FunctionalTestCase
     /**
      * @var array
      */
-    protected $testExtensionsToLoad = array('typo3conf/ext/ext_scaffold');
+    protected $testExtensionsToLoad = ['typo3conf/ext/ext_scaffold'];
 
     /**
      * @var array
      */
-    protected $coreExtensionsToLoad = array('fluid');
+    protected $coreExtensionsToLoad = ['fluid'];
 
-    public function setUp()
+    protected function setUp()
     {
         parent::setUp();
         $this->importDataSet(__DIR__ . '/Fixtures/Database/pages.xml');
-        $this->setUpFrontendRootPage(1, array('EXT:ext_scaffold/Tests/Functional/Fixtures/Frontend/Basic.ts'));
+        $this->setUpFrontendRootPage(1, ['EXT:ext_scaffold/Tests/Functional/Fixtures/Frontend/Basic.ts']);
     }
 
     /**
@@ -58,22 +58,19 @@ class RenderingTest extends FunctionalTestCase
      */
     public function emailViewHelperWorksWithSpamProtection()
     {
-        $requestArguments = array('id' => '1');
+        $requestArguments = ['id' => '1'];
         $expectedContent = '<a href="javascript:linkTo_UnCryptMailto(\'ocknvq,kphqBjgnjwo0kq\');">info(AT)helhum(DOT)io</a>' . chr(10);
         $this->assertSame($expectedContent, $this->fetchFrontendResponse($requestArguments)->getContent());
     }
-
-
 
     /* ***************
      * Utility methods
      * ***************/
 
-
-
     /**
      * @param array $requestArguments
      * @param bool $failOnFailure
+     *
      * @return Response
      */
     protected function fetchFrontendResponse(array $requestArguments, $failOnFailure = true)
@@ -84,18 +81,18 @@ class RenderingTest extends FunctionalTestCase
             $requestUrl = '/?' . GeneralUtility::implodeArrayForUrl('', $requestArguments);
         }
 
-        $arguments = array(
+        $arguments = [
             'documentRoot' => $this->getInstancePath(),
             'requestUrl' => $requestUrl,
-        );
+        ];
 
         $template = new \Text_Template('ntf://Frontend/Request.tpl');
         $template->setVar(
-            array(
+            [
                 'arguments' => var_export($arguments, true),
                 'originalRoot' => ORIGINAL_ROOT,
                 'ntfRoot' => __DIR__ . '/../../.Build/vendor/nimut/testing-framework/',
-            )
+            ]
         );
 
         $php = \PHPUnit_Util_PHP::factory();
