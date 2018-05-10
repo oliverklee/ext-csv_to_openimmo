@@ -60,6 +60,23 @@
         "vendor-dir": ".Build/vendor"
     },
     "scripts": {
+        "ci:php:lint": "find *.php Classes/ Configuration/ Tests/ -name '*.php' -print0 | xargs -0 -n 1 -P 4 php -l",
+        "ci:tests:unit": "phpunit -c .Build/vendor/nimut/testing-framework/res/Configuration/UnitTests.xml Tests/Unit/",
+        "ci:tests:functional": "phpunit -c .Build/vendor/nimut/testing-framework/res/Configuration/FunctionalTests.xml Tests/Functional/",
+        "ci:tests": [
+            "@ci:tests:unit",
+            "@ci:tests:functional"
+        ],
+        "ci:dynamic": [
+            "@ci:tests"
+        ],
+        "ci:static": [
+            "@ci:php:lint"
+        ],
+        "ci": [
+            "@ci:static",
+            "@ci:dynamic"
+        ],
         "require-typo3-version": [
             "@php -r '$conf=json_decode(file_get_contents(__DIR__.\"/composer.json\"),true);$conf[\"require\"][\"typo3/cms-core\"]=$_SERVER[\"argv\"][1];file_put_contents(__DIR__.\"/composer.json\",json_encode($conf,JSON_UNESCAPED_SLASHES|JSON_PRETTY_PRINT).chr(10));'",
             "@composer install"

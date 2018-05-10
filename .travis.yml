@@ -1,3 +1,5 @@
+sudo: false
+
 language: php
 
 php:
@@ -6,20 +8,20 @@ php:
 - 7.2
 
 env:
+  global:
+  - typo3DatabaseUsername=root typo3DatabaseHost=localhost DATABASE_PORT=3306 typo3DatabaseName=typo3 typo3DatabasePassword=''
+  - TYPO3_PATH_ROOT=$PWD/.Build/public
   matrix:
   - TYPO3_VERSION="^7.6" DEPENDENCIES=latest
   - TYPO3_VERSION="^7.6" DEPENDENCIES=oldest
 
-sudo: false
-
-addons:
-  apt:
-    packages:
-      - parallel
-
 cache:
   directories:
-    - $HOME/.composer/cache
+  - .Build/vendor
+  - $HOME/.composer/cache
+
+before_install:
+- phpenv config-rm xdebug.ini
 
 install:
 - >
@@ -38,24 +40,19 @@ install:
   echo;
   echo "Restoring the composer.json";
   git checkout .;
-- >
-  export TYPO3_PATH_ROOT=$PWD/.Build/public
 
 script:
 - >
   echo;
-  echo "Running unit tests";
-  .Build/vendor/bin/phpunit -c .Build/vendor/nimut/testing-framework/res/Configuration/UnitTests.xml Tests/Unit/
+  echo "Linting all PHP files";
+  composer ci:php:lint;
 
 - >
   echo;
-  echo "Running php lint";
-  find . -name \*.php ! -path "./.Build/*" | parallel --gnu php -d display_errors=stderr -l {} > /dev/null \;
+  echo "Running the unit tests";
+  composer ci:tests:unit;
 
 - >
   echo;
-  export typo3DatabaseName="typo3";
-  export typo3DatabaseHost="localhost";
-  export typo3DatabaseUsername="root";
-  export typo3DatabasePassword="";
-  find 'Tests/Functional' -wholename '*Test.php' | parallel --gnu 'echo; echo "Running functional test suite {}"; .Build/vendor/bin/phpunit -c .Build/vendor/nimut/testing-framework/res/Configuration/FunctionalTests.xml {}'
+  echo "Running the functional tests";
+  composer ci:tests:functional;
