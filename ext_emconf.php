@@ -6,8 +6,8 @@ $EM_CONF[$_EXTKEY] = [
     'author' => 'Oliver Klee',
     'author_email' => 'typo3-coding@oliverklee.de',
     'author_company' => 'oliverklee.de',
-    'state' => 'stable',
-    'version' => '0.1.0',
+    'state' => 'beta',
+    'version' => '1.0.x-dev',
     'constraints' =>
         [
             'depends' =>
@@ -15,9 +15,15 @@ $EM_CONF[$_EXTKEY] = [
                     'php' => '5.6.0-7.2.99',
                     'typo3' => '6.2.30-7.6.99',
                 ],
-            'conflicts' =>
-                [],
-            'suggests' =>
-                [],
         ],
+    'autoload' => [
+        'psr-4' => [
+            'OliverKlee\\CsvToOpenImmo\\' => 'Classes/',
+        ],
+    ],
+    'autoload-dev' => [
+        'psr-4' => [
+            'OliverKlee\\CsvToOpenImmo\\Tests\\' => 'Tests/',
+        ],
+    ],
 ];
