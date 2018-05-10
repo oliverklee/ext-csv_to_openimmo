@@ -1,19 +1,14 @@
 language: php
 
 php:
-  - 7.0
-  - 7.1
-  - 7.2
-
-matrix:
-  exclude:
-    - php: 5.5
-      env: TYPO3_VERSION="^8.7"
-    - php: 5.6
-      env: TYPO3_VERSION="^8.7"
+- 7.0
+- 7.1
+- 7.2
 
 env:
-  - TYPO3_VERSION="^7.6"
+  matrix:
+  - TYPO3_VERSION="^7.6" DEPENDENCIES=latest
+  - TYPO3_VERSION="^7.6" DEPENDENCIES=oldest
 
 sudo: false
 
@@ -27,25 +22,40 @@ cache:
     - $HOME/.composer/cache
 
 install:
-  - composer require-typo3-version "$TYPO3_VERSION"
-  - git checkout .
-  - export TYPO3_PATH_ROOT=$PWD/.Build/public
+- >
+  composer require-typo3-version "$TYPO3_VERSION";
+- >
+  echo;
+  if [ "$DEPENDENCIES" = "latest" ]; then
+    echo "Installing the latest dependencies";
+    composer update --with-dependencies --prefer-stable --prefer-dist;
+  else
+    echo "Installing the lowest dependencies";
+    composer update --with-dependencies --prefer-stable --prefer-dist --prefer-lowest;
+  fi;
+  composer show;
+- >
+  echo;
+  echo "Restoring the composer.json";
+  git checkout .;
+- >
+  export TYPO3_PATH_ROOT=$PWD/.Build/public
 
 script:
-  - >
-    echo;
-    echo "Running unit tests";
-    .Build/vendor/bin/phpunit -c .Build/vendor/nimut/testing-framework/res/Configuration/UnitTests.xml Tests/Unit/
+- >
+  echo;
+  echo "Running unit tests";
+  .Build/vendor/bin/phpunit -c .Build/vendor/nimut/testing-framework/res/Configuration/UnitTests.xml Tests/Unit/
 
-  - >
-    echo;
-    echo "Running php lint";
-    find . -name \*.php ! -path "./.Build/*" | parallel --gnu php -d display_errors=stderr -l {} > /dev/null \;
+- >
+  echo;
+  echo "Running php lint";
+  find . -name \*.php ! -path "./.Build/*" | parallel --gnu php -d display_errors=stderr -l {} > /dev/null \;
 
-  - >
-    echo;
-    export typo3DatabaseName="typo3";
-    export typo3DatabaseHost="localhost";
-    export typo3DatabaseUsername="root";
-    export typo3DatabasePassword="";
-    find 'Tests/Functional' -wholename '*Test.php' | parallel --gnu 'echo; echo "Running functional test suite {}"; .Build/vendor/bin/phpunit -c .Build/vendor/nimut/testing-framework/res/Configuration/FunctionalTests.xml {}'
+- >
+  echo;
+  export typo3DatabaseName="typo3";
+  export typo3DatabaseHost="localhost";
+  export typo3DatabaseUsername="root";
+  export typo3DatabasePassword="";
+  find 'Tests/Functional' -wholename '*Test.php' | parallel --gnu 'echo; echo "Running functional test suite {}"; .Build/vendor/bin/phpunit -c .Build/vendor/nimut/testing-framework/res/Configuration/FunctionalTests.xml {}'
