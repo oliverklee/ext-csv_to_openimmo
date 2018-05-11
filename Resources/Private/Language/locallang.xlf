@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<xliff version="1.0">
+    <file source-language="en" datatype="plaintext" original="messages">
+        <header/>
+        <body>
+            <trans-unit id="schedulerTask.title">
+                <source>CSV-to-OpenImmo converter</source>
+            </trans-unit>
+            <trans-unit id="schedulerTask.description">
+                <source>
+                    This task reads zipped CSV files with realty data from one directory and creates zipped OpenImmo
+                    files from them in another directory.
+                </source>
+            </trans-unit>
+            <trans-unit id="schedulerTask.configuration.sourceFolder">
+                <source>Source directory with the zipped CSV files (absolute path)</source>
+            </trans-unit>
+            <trans-unit id="schedulerTask.configuration.targetFolder">
+                <source>Target directory for the created zipped OpenImmo files (absolute path)</source>
+            </trans-unit>
+            <trans-unit id="schedulerTask.configuration.deleteProcessedSourceFiles">
+                <source>Delete source files after they have been processed</source>
+            </trans-unit>
+            <trans-unit id="schedulerTask.configuration.errors.sourceFolder.empty">
+                <source>Please enter a source directory.</source>
+            </trans-unit>
+            <trans-unit id="schedulerTask.configuration.errors.sourceFolder.nonexistent">
+                <source>Please enter an existing source directory.</source>
+            </trans-unit>
+            <trans-unit id="schedulerTask.configuration.errors.sourceFolder.relative">
+                <source>Please enter an absolute path for the source directory, not a relative one.</source>
+            </trans-unit>
+            <trans-unit id="schedulerTask.configuration.errors.sourceFolder.noDirectory">
+                <source>Please enter a directory as the source directory, not a file.</source>
+            </trans-unit>
+            <trans-unit id="schedulerTask.configuration.errors.sourceFolder.notWritable">
+                <source>Please enter a writable directory as the source.</source>
+            </trans-unit>
+            <trans-unit id="schedulerTask.configuration.errors.targetFolder.empty">
+                <source>Please enter a target directory.</source>
+            </trans-unit>
+            <trans-unit id="schedulerTask.configuration.errors.targetFolder.nonexistent">
+                <source>Please enter an existing target directory.</source>
+            </trans-unit>
+            <trans-unit id="schedulerTask.configuration.errors.targetFolder.relative">
+                <source>Please enter an absolute path for the target directory, not a relative one.</source>
+            </trans-unit>
+            <trans-unit id="schedulerTask.configuration.errors.targetFolder.noDirectory">
+                <source>Please enter a directory as the target directory, not a file.</source>
+            </trans-unit>
+            <trans-unit id="schedulerTask.configuration.errors.targetFolder.notWritable">
+                <source>Please enter a writable directory as the target.</source>
+            </trans-unit>
+            <trans-unit id="schedulerTask.configuration.errors.folders.identical">
+                <source>Please use different directories for the source and target.</source>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>
