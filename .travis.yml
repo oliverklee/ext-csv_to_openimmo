@@ -9,7 +9,6 @@ php:
 
 env:
   global:
-  - typo3DatabaseUsername=root typo3DatabaseHost=localhost DATABASE_PORT=3306 typo3DatabaseName=typo3 typo3DatabasePassword=''
   - TYPO3_PATH_ROOT=$PWD/.Build/public
   matrix:
   - TYPO3_VERSION="^7.6" DEPENDENCIES=latest
