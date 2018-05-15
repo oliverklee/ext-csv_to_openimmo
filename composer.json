@@ -24,6 +24,7 @@
     },
     "require": {
         "php": "^5.6.0 || ~7.0.0 || ~7.1.0 || ~7.2.0",
+        "ext-zip": "*",
 
         "typo3/cms-core": "^6.2.0 || ^7.6.23 ",
         "typo3/cms-fluid": "^6.2.0 || ^7.6.23 ",
@@ -63,7 +64,7 @@
     "scripts": {
         "ci:php:lint": "find *.php Classes/ Configuration/ Tests/ -name '*.php' -print0 | xargs -0 -n 1 -P 4 php -l",
         "ci:tests:unit": "phpunit -c .Build/vendor/nimut/testing-framework/res/Configuration/UnitTests.xml Tests/Unit/",
-        "ci:tests:functional": "phpunit -c .Build/vendor/nimut/testing-framework/res/Configuration/FunctionalTests.xml Tests/Functional/",
+        "ci:tests:functional": "phpunit -c .Build/vendor/nimut/testing-framework/res/Configuration/UnitTests.xml Tests/Functional/",
         "ci:tests": [
             "@ci:tests:unit",
             "@ci:tests:functional"
