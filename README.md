@@ -7,8 +7,12 @@
 [![License](https://poser.pugx.org/oliverklee/ext-csv_to_openimmo/license.svg)](https://packagist.org/packages/oliverklee/ext-csv_to_openimmo)
 
 This TYPO3 extension provides a Scheduler task that reads zipped CSV files
+(created using
+[Wodis Sigma](https://www.aareon.de/Produkte.5772.html?tx_aareon_selector[category]=5774))
 from a configured folder and writes zipped OpenImmo files to another configured
 folder. The task will also copy all image files and PDF from the ZIPs.
+
+The task will also automatically convert from ISO9959-1 to UTF-8.
 
 ## Installing the extension
 
