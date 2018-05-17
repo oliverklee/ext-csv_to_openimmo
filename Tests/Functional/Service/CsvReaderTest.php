@@ -123,61 +123,120 @@ class CsvReaderTest extends UnitTestCase
     }
 
     /**
-     * @test
+     * @return array[]
      */
-    public function readCsvReassignsColumnWithSpeakingKeys()
+    public function csvResultDataProvider()
+    {
+        return [
+            'object #1' => [
+                0,
+                [
+                    'utilization' => 'Wohnraum',
+                    'objectNumber' => '2117 / 1 / 16',
+                    'street' => 'Schomerusstraße 1',
+                    'zip' => '07745',
+                    'city' => 'Jena',
+                    'district' => 'Winzerla',
+                    'yearOfConstruction' => '1991',
+                    'floors' => '',
+                    'availabilityDate' => 'sofort',
+                    'floor' => '3. Etage',
+                    'numberOfRooms' => '2',
+                    'livingArea' => '55,34',
+                    'heatingType' => 'Fernwärme',
+                    'rentExclusiveOfHeating' => '294',
+                    'additionalCosts' => '127',
+                    'heatingIncludedInAdditionalCosts' => 'ja',
+                    'totalRent' => '421',
+                    'deposit' => 'kautionsfrei',
+                    'title' => 'großzügige 2 Raumwohnung in Jena-Winzerla',
+                    'location' => 'Das Gebäude liegt im unteren Teil von Winzerla mit wunderbarem Blick auf die Kernberge oder das Zentrum von Jena. Einkaufsmöglichkeiten und Dienstleister ebenso Schulen und Kindergärten sind im Stadtteil vorhanden. Mit dem öffentlichen Nahverkehr erreichen Sie in kurzer Zeit das Zentrum und alle anderen Stadtteile Jenas. Ob mit Bus oder Straßenbahn es sind nur wenige Minuten zu den Bahnhöfen Paradies und Göschwitz sowie dem Busbahnhof. Das Freizeit- und Spaßbad GalaxSea ist fußläufig zu erreichen.',
+                    'description' => '',
+                    'equipment' => '',
+                    'elevator' => 'nicht vorhanden',
+                    'balcony' => 'vorhanden',
+                    'garageType' => 'öffentlich',
+                    'contactPersonSalutation' => 'Herr',
+                    'contactPersonFullName' => 'Matthias Doe',
+                    'contactPersonPhoneNumber' => '+49 1111 884429',
+                    'contactPersonEmail' => 'winzerla@example.com',
+                    'imageFileName 01' => '00513444.jpg',
+                    'imageDescription 01' => 'Objektbild',
+                    'imageFileName 02' => '00398351.jpg',
+                    'imageDescription 02' => '',
+                    'imageFileName 03' => '00517279.jpg',
+                    'imageDescription 03' => 'Straßenbild',
+                    'imageFileName 04' => '00517277.jpg',
+                    'imageDescription 04' => 'Grünflächen',
+                    'imageFileName 05' => '00517278.jpg',
+                    'imageDescription 05' => 'Innenhof',
+                ],
+            ],
+            'object #2' => [
+                1,
+                [
+                    'utilization' => 'Wohnraum',
+                    'objectNumber' => '3033 / 3 / 28',
+                    'street' => 'Fritz-Kalisch-Straße 3',
+                    'zip' => '07743',
+                    'city' => 'Jena',
+                    'district' => 'Stadt-Nord',
+                    'yearOfConstruction' => '1991',
+                    'floors' => '',
+                    'availabilityDate' => 'sofort',
+                    'floor' => '1. Etage',
+                    'numberOfRooms' => '3',
+                    'livingArea' => '65,63',
+                    'heatingType' => 'Fernwärme',
+                    'rentExclusiveOfHeating' => '430',
+                    'additionalCosts' => '164',
+                    'heatingIncludedInAdditionalCosts' => 'ja',
+                    'totalRent' => '594',
+                    'deposit' => 'kautionsfrei',
+                    'title' => 'Wohnung in Jena Nord sucht WG',
+                    'location' => 'Das Gebäude liegt im Zentrum des Stadtteils Jena-Nord am Emil-Höllein-Platz. In unmittelbarer Umgebung finden Sie einzelne Dienstleister und Einkaufsmöglichkeiten. Der öffentliche Nahverkehr ist gut zu Fuß erreichbar. Die Straßenbahn bringt Sie in nur wenigen Minuten in das Stadtzentrum von Jena. In der Nähe befinden sich Kindergärten und Schulen mit unterschiedlichen Bildungsrichtungen. Die grünen Innenhöfe mit altem Baumbestand sorgen für Erholung und Entspannung.',
+                    'description' => '',
+                    'equipment' => 'Diese Wohnung ist ideal geeignet für eine 2er WG oder einen 2 Personen Haushalt. Die einzelnen Wohnräume bieten sehr viel Stellfläche und sind jeweils mit einem seperaten TV und Telefonanschluss ausgestattet. Der Flur, das Wohnzimmer und das dritte Zimmer verfügen über robustes Holzparkett und die Küche und Bad sind mit Fenster.',
+                    'elevator' => 'nicht vorhanden',
+                    'balcony' => 'nicht vorhanden',
+                    'garageType' => 'öffentlich im Wohnumfeld',
+                    'contactPersonSalutation' => 'Frau',
+                    'contactPersonFullName' => 'Annett Doe',
+                    'contactPersonPhoneNumber' => '+49 3641 884469',
+                    'contactPersonEmail' => 'stadtmitte@example.com',
+                    'imageFileName 01' => '00535445.jpg',
+                    'imageDescription 01' => 'Objektbild',
+                    'imageFileName 02' => '00539003.jpg',
+                    'imageDescription 02' => '',
+                    'imageFileName 03' => '00535488.jpg',
+                    'imageDescription 03' => 'Straßenbild',
+                    'imageFileName 04' => '',
+                    'imageDescription 04' => '',
+                    'imageFileName 05' => '',
+                    'imageDescription 05' => '',
+                ],
+            ],
+        ];
+    }
+
+    /**
+     * @test
+     *
+     * @param int $lineIndex
+     * @param string[] $expectedResult
+     * @dataProvider csvResultDataProvider
+     */
+    public function readCsvReassignsColumnWithSpeakingKeys($lineIndex, array $expectedResult)
     {
         $path = __DIR__ . '/../Fixtures/CorrectCsv/objects.csv';
 
         $result = $this->subject->readCsv($path);
 
-        $expectedResult = [
-            'utilization' => 'Wohnraum',
-            'objectNumber' => '2117 / 1 / 16',
-            'street' => 'Schomerusstraße 1',
-            'zip' => '07745',
-            'city' => 'Jena',
-            'district' => 'Winzerla',
-            'yearOfConstruction' => '1991',
-            'floors' => '',
-            'availabilityDate' => 'sofort',
-            'floor' => '3. Etage',
-            'numberOfRooms' => '2',
-            'livingArea' => '55,34',
-            'heatingType' => 'Fernwärme',
-            'rentExclusiveOfHeating' => '294',
-            'additionalCosts' => '127',
-            'heatingIncludedInAdditionalCosts' => 'ja',
-            'totalRent' => '421',
-            'deposit' => 'kautionsfrei',
-            'title' => 'großzügige 2 Raumwohnung in Jena-Winzerla',
-            'location' => 'Das Gebäude liegt im unteren Teil von Winzerla mit wunderbarem Blick auf die Kernberge oder das Zentrum von Jena. Einkaufsmöglichkeiten und Dienstleister ebenso Schulen und Kindergärten sind im Stadtteil vorhanden. Mit dem öffentlichen Nahverkehr erreichen Sie in kurzer Zeit das Zentrum und alle anderen Stadtteile Jenas. Ob mit Bus oder Straßenbahn es sind nur wenige Minuten zu den Bahnhöfen Paradies und Göschwitz sowie dem Busbahnhof. Das Freizeit- und Spaßbad GalaxSea ist fußläufig zu erreichen.',
-            'description' => '',
-            'equipment' => '',
-            'elevator' => 'nicht vorhanden',
-            'balcony' => 'vorhanden',
-            'garageType' => 'öffentlich',
-            'contactPersonSalutation' => 'Herr',
-            'contactPersonFullName' => 'Matthias Doe',
-            'contactPersonPhoneNumber' => '+49 1111 884429',
-            'contactPersonEmail' => 'winzerla@example.com',
-            'imageFileName 01' => '00513444.jpg',
-            'imageDescription 01' => 'Objektbild',
-            'imageFileName 02' => '00398351.jpg',
-            'imageDescription 02' => '',
-            'imageFileName 03' => '00517279.jpg',
-            'imageDescription 03' => 'Straßenbild',
-            'imageFileName 04' => '00517277.jpg',
-            'imageDescription 04' => 'Grünflächen',
-            'imageFileName 05' => '00517278.jpg',
-            'imageDescription 05' => 'Innenhof',
-        ];
-
-        foreach ($expectedResult as $key => $value) {
-            $prefix = $key . ': ';
-            static::assertSame($prefix . $value, $prefix . $result[0][$key]);
+        foreach ($expectedResult as $columnKey => $value) {
+            $prefix = $columnKey . ': ';
+            static::assertSame($prefix . $value, $prefix . $result[$lineIndex][$columnKey]);
         }
 
-        static::assertSame($expectedResult, $result[0]);
+        static::assertSame($expectedResult, $result[$lineIndex]);
     }
 }
