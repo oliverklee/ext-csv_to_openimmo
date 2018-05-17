@@ -1,10 +1,10 @@
 # CSV-to-OpenImmo converter
 
 [![Build Status](https://travis-ci.org/oliverklee/ext-csv_to_openimmo.svg?branch=master)](https://travis-ci.org/oliverklee/ext-csv_to_openimmo)
-[![Latest Stable Version](https://poser.pugx.org/oliverklee/oelib/v/stable.svg)](https://packagist.org/packages/oliverklee/oelib)
-[![Total Downloads](https://poser.pugx.org/oliverklee/oelib/downloads.svg)](https://packagist.org/packages/oliverklee/oelib)
-[![Latest Unstable Version](https://poser.pugx.org/oliverklee/oelib/v/unstable.svg)](https://packagist.org/packages/oliverklee/oelib)
-[![License](https://poser.pugx.org/oliverklee/oelib/license.svg)](https://packagist.org/packages/oliverklee/oelib)
+[![Latest Stable Version](https://poser.pugx.org/oliverklee/ext-csv_to_openimmo/v/stable.svg)](https://packagist.org/packages/oliverklee/ext-csv_to_openimmo)
+[![Total Downloads](https://poser.pugx.org/oliverklee/ext-csv_to_openimmo/downloads.svg)](https://packagist.org/packages/oliverklee/ext-csv_to_openimmo)
+[![Latest Unstable Version](https://poser.pugx.org/oliverklee/ext-csv_to_openimmo/v/unstable.svg)](https://packagist.org/packages/oliverklee/ext-csv_to_openimmo)
+[![License](https://poser.pugx.org/oliverklee/ext-csv_to_openimmo/license.svg)](https://packagist.org/packages/oliverklee/ext-csv_to_openimmo)
 
 This TYPO3 extension provides a Scheduler task that reads zipped CSV files
 from a configured folder and writes zipped OpenImmo files to another configured
