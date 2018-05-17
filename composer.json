@@ -6,7 +6,10 @@
         "TYPO3",
         "extension",
         "openimmo",
-        "csv"
+        "csv",
+        "wodis",
+        "realty",
+        "converter"
     ],
     "homepage": "https://www.oliverklee.de/",
     "license": "GPL-3.0-or-later",
