@@ -1,6 +1,8 @@
 <?php
 namespace OliverKlee\CsvToOpenImmo\Service;
 
+use TYPO3\CMS\Core\Utility\GeneralUtility;
+
 /**
  * This class takes care of building an OpenImmo XML structure from CSV lines.
  *
@@ -25,13 +27,24 @@ class OpenImmoBuilder
     ';
 
     /**
+     * @var RealtyObjectBuilder
+     */
+    private $realtyObjectBuilder = null;
+
+    /**
      * @var \DOMDocument
      */
     private $document = null;
 
+    /**
+     * @var \DOMElement
+     */
+    private $offererElement = null;
+
     public function __construct()
     {
         $this->buildBasicDocument();
+        $this->realtyObjectBuilder = GeneralUtility::makeInstance(RealtyObjectBuilder::class, $this->document);
     }
 
     /**
@@ -43,6 +56,7 @@ class OpenImmoBuilder
     {
         $this->document = new \DOMDocument('1.0', 'utf-8');
         $this->document->loadXML(static::BASIC_XML);
+        $this->offererElement = $this->document->getElementsByTagName('anbieter')->item(0);
     }
 
     /**
@@ -51,5 +65,15 @@ class OpenImmoBuilder
     public function build()
     {
         return $this->document;
+    }
+
+    /**
+     * @param string[] $fieldValues the data for one object as it comes from the CsvReader
+     *
+     * @return void
+     */
+    public function addObject(array $fieldValues)
+    {
+        $this->offererElement->appendChild($this->realtyObjectBuilder->buildFromFields($fieldValues));
     }
 }
