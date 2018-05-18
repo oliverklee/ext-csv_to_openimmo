@@ -36,6 +36,7 @@
     },
     "require-dev": {
         "nimut/testing-framework": "^3.0",
+        "phpunit/phpunit": "^6.5",
         "helhum/typo3-composer-setup": "^0.5.1"
     },
     "replace": {
