@@ -188,4 +188,17 @@ class OpenImmoBuilderTest extends UnitTestCase
         $objectElement = $document->getElementsByTagName('immobilie')->item(0);
         static::assertInstanceOf(\DOMElement::class, $objectElement);
     }
+
+    /**
+     * @test
+     */
+    public function documentWithTwoObjectsInsertsTwoObjectElements()
+    {
+        $this->subject->addObject(self::$objectDataOne);
+        $this->subject->addObject(self::$objectDataTwo);
+        $document = $this->subject->build();
+
+        $objectElements = $document->getElementsByTagName('immobilie');
+        static::assertCount(2, $objectElements);
+    }
 }
