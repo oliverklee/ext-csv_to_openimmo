@@ -26,6 +26,11 @@ class Zipper implements SingletonInterface
      */
     private $sourceDirectory = '';
 
+    /**
+     * @var string
+     */
+    private $targetDirectory = '';
+
     public function __construct()
     {
         $this->extractionDirectory = PATH_site . 'typo3temp/' . self::EXTRACTION_DIRECTORY_IN_TEMP;
@@ -48,7 +53,7 @@ class Zipper implements SingletonInterface
      */
     public function setExtractionDirectory($directory)
     {
-        $this->extractionDirectory = $directory;
+        $this->extractionDirectory = rtrim($directory, '/');
     }
 
     /**
@@ -58,7 +63,17 @@ class Zipper implements SingletonInterface
      */
     public function setSourceDirectory($directory)
     {
-        $this->sourceDirectory = $directory;
+        $this->sourceDirectory = rtrim($directory, '/');
+    }
+
+    /**
+     * @param string $directory
+     *
+     * @return void
+     */
+    public function setTargetDirectory($directory)
+    {
+        $this->targetDirectory = rtrim($directory, '/');
     }
 
     /**
@@ -172,5 +187,42 @@ class Zipper implements SingletonInterface
     private function createFullZipPath($relativeZipPath)
     {
         return rtrim($this->sourceDirectory, '/') . '/' . $relativeZipPath;
+    }
+
+    /**
+     * Creates a new ZIP in the target directory using an automated name based on the source zip file name and a
+     * timestamp.
+     *
+     * The new ZIP will contain $xmlDocument and the images from the (already extracted) source ZIP.
+     *
+     * @param string $relativeSourceZipPath
+     * @param \DOMDocument $xmlDocument
+     *
+     * @return string full path to the created ZIP
+     *
+     * @throws \RuntimeException
+     */
+    public function createTargetZip($relativeSourceZipPath, \DOMDocument $xmlDocument)
+    {
+        $sourceFileInfo = pathinfo($relativeSourceZipPath);
+        $baseName = basename($relativeSourceZipPath, '.' . $sourceFileInfo['extension']);
+        $timestamp = date('-Ymdhis');
+        $targetZipName = $baseName . $timestamp . '.zip';
+
+        $fullTargetZipPath = $this->targetDirectory . '/' . $targetZipName;
+
+        if (!is_dir($this->targetDirectory)) {
+            throw new \RuntimeException('"' . $this->targetDirectory . '" is not a directory.', 1526682438);
+        }
+
+        $zip = new \ZipArchive();
+        $openStatus = $zip->open($fullTargetZipPath, \ZipArchive::CREATE | \ZipArchive::EXCL);
+        if (!$openStatus) {
+            throw new \RuntimeException('Could not open ZIP.', 1526682222);
+        }
+        $zip->addFromString($baseName . '.xml', $xmlDocument->saveXML());
+        $zip->close();
+
+        return $fullTargetZipPath;
     }
 }
