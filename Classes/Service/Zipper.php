@@ -85,7 +85,7 @@ class Zipper implements SingletonInterface
      */
     public function extractZip($relativeZipPath)
     {
-        $fullZipPath = rtrim($this->sourceDirectory, '/') . '/' . $relativeZipPath;
+        $fullZipPath = $this->createFullZipPath($relativeZipPath);
         $this->checkZipPath($fullZipPath);
 
         $zip = new \ZipArchive();
@@ -150,5 +150,27 @@ class Zipper implements SingletonInterface
         $relativeDirectoryName = str_ireplace('.zip', '/', basename($pathOfZip));
 
         return $this->extractionDirectory . '/' . $relativeDirectoryName;
+    }
+
+    /**
+     * @param string $relativeZipPath file path relative to the source directory
+     *
+     * @return void
+     */
+    public function removeExtractionFolderForZip($relativeZipPath)
+    {
+        $extractionFolder = $this->getNameForExtractionFolder($this->createFullZipPath($relativeZipPath));
+
+        GeneralUtility::rmdir($extractionFolder, true);
+    }
+
+    /**
+     * @param string $relativeZipPath
+     *
+     * @return string string
+     */
+    private function createFullZipPath($relativeZipPath)
+    {
+        return rtrim($this->sourceDirectory, '/') . '/' . $relativeZipPath;
     }
 }
