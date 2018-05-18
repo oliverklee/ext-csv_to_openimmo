@@ -12,13 +12,25 @@ This TYPO3 extension provides a Scheduler task that reads zipped CSV files
 from a configured folder and writes zipped OpenImmo files to another configured
 folder. The task will also copy all image files and PDF from the ZIPs.
 
-The task will also automatically convert from ISO9959-1 to UTF-8.
+The task will also automatically convert from ISO-9959-1 to UTF-8.
 
 ## Installing the extension
 
 If you install the extension manually (not from the TER and not using Composer),
 please make sure to name the extension directory `csv_to_openimmo`, not
 `ext-csv_to_openimmo`.
+
+## Caveats
+
+The following OpenImmo fields currently are not imported:
+
+- vermarktungsart (will always be "MIETE_PACHT")
+- object type (will always be "wohnung")
+- elevator (as it is a free-text field in the CSV file)
+- garage (as it is a free-text field in the CSV file)
+- balcony (as it is a free-text field in the CSV file)
+- other image types than JPEG
+- the type of transfer (will always be "VOLL")
 
 ## Sponsorship
 

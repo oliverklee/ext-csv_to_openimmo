@@ -33,6 +33,53 @@ class RealtyObjectBuilderTest extends UnitTestCase
     }
 
     /**
+     * @test
+     */
+    public function buildFromFieldsAlwaysHasUtilizationElement()
+    {
+        $result = $this->subject->buildFromFields([]);
+
+        $categoryField = $result->getElementsByTagName('objektkategorie')->item(0);
+        static::assertNotNull($categoryField);
+
+        $utilizationElement = $categoryField->getElementsByTagName('nutzungsart')->item(0);
+        static::assertNotNull($utilizationElement);
+    }
+
+    /**
+     * @test
+     */
+    public function buildFromFieldsAlwaysHasMarketingTypeElementSetToRent()
+    {
+        $result = $this->subject->buildFromFields([]);
+
+        $categoryField = $result->getElementsByTagName('objektkategorie')->item(0);
+        static::assertNotNull($categoryField);
+
+        $marketingTypeElement = $categoryField->getElementsByTagName('vermarktungsart')->item(0);
+        static::assertNotNull($marketingTypeElement);
+        static::assertSame('false', $marketingTypeElement->getAttribute('KAUF'));
+        static::assertSame('true', $marketingTypeElement->getAttribute('MIETE_PACHT'));
+    }
+
+    /**
+     * @test
+     */
+    public function buildFromFieldsAlwaysHasObjectTypeElementSetToFlat()
+    {
+        $result = $this->subject->buildFromFields([]);
+
+        $categoryField = $result->getElementsByTagName('objektkategorie')->item(0);
+        static::assertNotNull($categoryField);
+
+        $objectTypeElement = $categoryField->getElementsByTagName('objektart')->item(0);
+        static::assertNotNull($objectTypeElement);
+
+        $flatElement = $objectTypeElement->getElementsByTagName('wohnung')->item(0);
+        static::assertNotNull($flatElement);
+    }
+
+    /**
      * @return string[][]
      */
     public function contactPersonDataProvider()
@@ -138,10 +185,9 @@ class RealtyObjectBuilderTest extends UnitTestCase
     /**
      * @return string[][]
      */
-    public function administrationDataProvider()
+    public function objectAdministrationDataProvider()
     {
         return [
-            'objectNumber' => ['objectNumber', 'objektnr_extern', 'A/B 42'],
             'availabilityDate' => ['availabilityDate', 'verfuegbar_ab', 'ab Anfang Oktober'],
         ];
     }
@@ -152,11 +198,64 @@ class RealtyObjectBuilderTest extends UnitTestCase
      * @param string $fieldName
      * @param string $tagName
      * @param string $value
-     * @dataProvider administrationDataProvider
+     * @dataProvider objectAdministrationDataProvider
      */
-    public function buildMapsAdministrationFields($fieldName, $tagName, $value)
+    public function buildMapsObjectAdministrationFields($fieldName, $tagName, $value)
+    {
+        $this->assertChildElementValue('verwaltung_objekt', $fieldName, $tagName, $value, $value);
+    }
+
+    /**
+     * @return string[][]
+     */
+    public function technicalAdministrationDataProvider()
+    {
+        return [
+            'objectNumber' => ['objectNumber', 'objektnr_extern', 'A/B 42'],
+        ];
+    }
+
+    /**
+     * @test
+     *
+     * @param string $fieldName
+     * @param string $tagName
+     * @param string $value
+     * @dataProvider technicalAdministrationDataProvider
+     */
+    public function buildMapsTechnicalAdministrationFields($fieldName, $tagName, $value)
     {
         $this->assertChildElementValue('verwaltung_techn', $fieldName, $tagName, $value, $value);
+    }
+
+    /**
+     * @return string[][]
+     */
+    public function technicalDefaultFieldDataProvider()
+    {
+        return [
+            'aktion' => ['aktion'],
+            'openimmo_obid' => ['openimmo_obid'],
+            'kennung_ursprung' => ['kennung_ursprung'],
+            'stand_vom' => ['stand_vom'],
+        ];
+    }
+
+    /**
+     * @test
+     *
+     * @param string $fieldName
+     * @dataProvider technicalDefaultFieldDataProvider
+     */
+    public function buildAddsDefaultTechnicalAdministrationFields($fieldName)
+    {
+        $result = $this->subject->buildFromFields([]);
+
+        $parentElement = $result->getElementsByTagName('verwaltung_techn')->item(0);
+        static::assertNotNull($parentElement);
+
+        $childElement = $parentElement->getElementsByTagName($fieldName)->item(0);
+        static::assertNotNull($childElement);
     }
 
     /**
@@ -361,15 +460,19 @@ class RealtyObjectBuilderTest extends UnitTestCase
         static::assertNotNull($attachmentElement);
         static::assertSame('EXTERN', $attachmentElement->getAttribute('location'));
 
+        $titleElement = $attachmentElement->getElementsByTagName('anhangtitel')->item(0);
+        static::assertNotNull($titleElement);
+        static::assertSame($title, $titleElement->nodeValue);
+
+        $formatElement = $attachmentElement->getElementsByTagName('format')->item(0);
+        static::assertNotNull($formatElement);
+        static::assertSame('jpeg', $formatElement->nodeValue);
+
         $dataElement = $attachmentElement->getElementsByTagName('daten')->item(0);
         static::assertNotNull($dataElement);
 
         $pathElement = $dataElement->getElementsByTagName('pfad')->item(0);
         static::assertNotNull($pathElement);
         static::assertSame($fileName, $pathElement->nodeValue);
-
-        $titleElement = $attachmentElement->getElementsByTagName('anhangtitel')->item(0);
-        static::assertNotNull($titleElement);
-        static::assertSame($title, $titleElement->nodeValue);
     }
 }
