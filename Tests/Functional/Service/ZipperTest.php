@@ -4,6 +4,7 @@ namespace OliverKlee\CsvToOpenImmo\Tests\Functional\Service;
 use Nimut\TestingFramework\TestCase\UnitTestCase;
 use OliverKlee\CsvToOpenImmo\Service\Zipper;
 use org\bovigo\vfs\vfsStream;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
  * Test case.
@@ -140,7 +141,33 @@ class ZipperTest extends UnitTestCase
 
         static::assertSame($this->extractionDirectory . '/objects/', $createdDirectory);
 
+        static::assertDirectoryExists($createdDirectory);
         static::fileExists($createdDirectory . 'objects.csv');
         static::fileExists($createdDirectory . '00517278.jpg');
+    }
+
+    /**
+     * @test
+     */
+    public function removeExtractionFolderForZipForExistingFolderRemovesFolder()
+    {
+        $createdDirectory = $this->subject->extractZip('objects.zip');
+
+        $this->subject->removeExtractionFolderForZip('objects.zip');
+
+        static::assertDirectoryNotExists($createdDirectory);
+    }
+
+    /**
+     * @test
+     */
+    public function removeExtractionFolderForZipForRemovedFolderNotThrowsException()
+    {
+        $createdDirectory = $this->subject->extractZip('objects.zip');
+        GeneralUtility::rmdir($createdDirectory, true);
+
+        $this->subject->removeExtractionFolderForZip('objects.zip');
+
+        static::assertDirectoryNotExists($createdDirectory);
     }
 }
