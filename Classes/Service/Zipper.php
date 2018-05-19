@@ -195,25 +195,31 @@ class Zipper implements SingletonInterface
      *
      * The new ZIP will contain $xmlDocument and the images from the (already extracted) source ZIP.
      *
+     * Before this method may be called, extractZip must be called.
+     *
      * @param string $relativeSourceZipPath
      * @param \DOMDocument $xmlDocument
      *
      * @return string full path to the created ZIP
      *
+     * @throws \BadMethodCallException
      * @throws \RuntimeException
      */
     public function createTargetZip($relativeSourceZipPath, \DOMDocument $xmlDocument)
     {
+        $extractionFolder = $this->getNameForExtractionFolder($relativeSourceZipPath);
+        if (!is_dir($extractionFolder)) {
+            throw new \BadMethodCallException('Please call extractZip before calling createTargetZip.', 1526749420);
+        }
+        if (!is_dir($this->targetDirectory)) {
+            throw new \RuntimeException('"' . $this->targetDirectory . '" is not a directory.', 1526682438);
+        }
+
         $sourceFileInfo = pathinfo($relativeSourceZipPath);
         $baseName = basename($relativeSourceZipPath, '.' . $sourceFileInfo['extension']);
         $timestamp = date('-Ymdhis');
         $targetZipName = $baseName . $timestamp . '.zip';
-
         $fullTargetZipPath = $this->targetDirectory . '/' . $targetZipName;
-
-        if (!is_dir($this->targetDirectory)) {
-            throw new \RuntimeException('"' . $this->targetDirectory . '" is not a directory.', 1526682438);
-        }
 
         $zip = new \ZipArchive();
         $openStatus = $zip->open($fullTargetZipPath, \ZipArchive::CREATE | \ZipArchive::EXCL);
@@ -221,6 +227,13 @@ class Zipper implements SingletonInterface
             throw new \RuntimeException('Could not open ZIP.', 1526682222);
         }
         $zip->addFromString($baseName . '.xml', $xmlDocument->saveXML());
+
+        /** @var string[] $imagePaths */
+        $imagePaths = GeneralUtility::getAllFilesAndFoldersInPath([], $extractionFolder, 'jpg');
+        foreach ($imagePaths as $imagePath) {
+            $zip->addFile($imagePath, basename($imagePath));
+        }
+
         $zip->close();
 
         return $fullTargetZipPath;
