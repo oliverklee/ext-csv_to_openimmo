@@ -61,7 +61,7 @@ class CsvConverterTest extends UnitTestCase
      */
     public function setDeleteProcessedSourceFilesSetsdeleteProcessedSourceFiles()
     {
-        $this->subject->setdeleteProcessedSourceFiles(true);
+        $this->subject->setDeleteProcessedSourceFiles(true);
 
         static::assertTrue($this->subject->getDeleteProcessedSourceFiles());
     }
