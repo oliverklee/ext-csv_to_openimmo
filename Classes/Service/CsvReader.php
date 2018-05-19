@@ -206,13 +206,14 @@ class CsvReader implements SingletonInterface
         $result = [];
 
         foreach ($rawLine as $zeroBasedColumnNumber => $value) {
+            /** @var int $zeroBasedColumnNumber */
             $oneBasedColumnNumber = $zeroBasedColumnNumber + 1;
             if (array_key_exists($oneBasedColumnNumber, self::$columnKeys)) {
                 $speakingKey = self::$columnKeys[$oneBasedColumnNumber];
                 $result[$speakingKey] = $value;
             } else {
-                if (self::DEBUG && trim($value) !== ''
-                    && !array_key_exists($oneBasedColumnNumber, self::$ignoredColumns)) {
+                if (self::DEBUG && !array_key_exists($oneBasedColumnNumber, self::$ignoredColumns)
+                    && trim($value) !== '') {
                     throw new \UnexpectedValueException(
                         'The column #' . $oneBasedColumnNumber . ' with the value "' .
                         utf8_encode($value) . '" is not mapped yet.',
