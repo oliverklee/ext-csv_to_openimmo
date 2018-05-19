@@ -133,8 +133,7 @@ class RealtyObjectBuilder
         $this->populateCategoryElement();
         foreach (static::$elementMapping as $elementName => $fieldMappings) {
             $parentElement = $this->createOrFindElement($elementName);
-            foreach ($fieldMappings as $sourceFieldName => $fieldMapping) {
-                list($targetElementName, $type) = $fieldMapping;
+            foreach ($fieldMappings as $sourceFieldName => list($targetElementName, $type)) {
                 if (empty($this->fieldValues[$sourceFieldName])) {
                     continue;
                 }
@@ -214,27 +213,6 @@ class RealtyObjectBuilder
     }
 
     /**
-     * @param \DOMElement $parentElement
-     * @param string $sourceFieldName
-     * @param string $targetElementName
-     *
-     * @return void
-     */
-    private function createAndAppendDecimalBasedChildElement(
-        \DOMElement $parentElement,
-        $sourceFieldName,
-        $targetElementName
-    ) {
-        if (empty($this->fieldValues[$sourceFieldName])) {
-            return;
-        }
-
-        $value = $this->normalizeDecimalValue($this->fieldValues[$sourceFieldName]);
-        $child = $this->document->createElement($targetElementName, $value);
-        $parentElement->appendChild($child);
-    }
-
-    /**
      * @param string $rawValue
      *
      * @return string
@@ -248,29 +226,6 @@ class RealtyObjectBuilder
     }
 
     /**
-     * @param \DOMElement $parentElement
-     * @param string $sourceFieldName
-     * @param string $targetElementName
-     *
-     * @return void
-     */
-    private function createAndAppendIntegerBasedChildElement(
-        \DOMElement $parentElement,
-        $sourceFieldName,
-        $targetElementName
-    ) {
-        if (empty($this->fieldValues[$sourceFieldName])) {
-            return;
-        }
-
-        $value = $this->normalizeIntegerValue($this->fieldValues[$sourceFieldName]);
-        if ($value !== '0') {
-            $child = $this->document->createElement($targetElementName, $value);
-            $parentElement->appendChild($child);
-        }
-    }
-
-    /**
      * @param string $rawValue
      *
      * @return string
@@ -278,27 +233,6 @@ class RealtyObjectBuilder
     private function normalizeIntegerValue($rawValue)
     {
         return (string)(int)$rawValue;
-    }
-
-    /**
-     * @param \DOMElement $parentElement
-     * @param string $sourceFieldName
-     * @param string $targetElementName
-     *
-     * @return void
-     */
-    private function createAndAppendBooleanBasedChildElement(
-        \DOMElement $parentElement,
-        $sourceFieldName,
-        $targetElementName
-    ) {
-        if (empty($this->fieldValues[$sourceFieldName])) {
-            return;
-        }
-
-        $value = $this->normalizeBooleanValue($this->fieldValues[$sourceFieldName]);
-        $child = $this->document->createElement($targetElementName, $value);
-        $parentElement->appendChild($child);
     }
 
     /**

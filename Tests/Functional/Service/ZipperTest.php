@@ -151,8 +151,8 @@ class ZipperTest extends UnitTestCase
         static::assertSame($this->extractionDirectory . '/objects/', $createdDirectory);
 
         static::assertDirectoryExists($createdDirectory);
-        static::fileExists($createdDirectory . 'objects.csv');
-        static::fileExists($createdDirectory . '00517278.jpg');
+        static::assertFileExists($createdDirectory . 'objects.csv');
+        static::assertFileExists($createdDirectory . '00517278.jpg');
     }
 
     /**
