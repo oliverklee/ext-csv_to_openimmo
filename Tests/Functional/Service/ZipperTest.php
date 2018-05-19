@@ -3,7 +3,6 @@ namespace OliverKlee\CsvToOpenImmo\Tests\Functional\Service;
 
 use Nimut\TestingFramework\TestCase\UnitTestCase;
 use OliverKlee\CsvToOpenImmo\Service\Zipper;
-use org\bovigo\vfs\vfsStream;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
@@ -33,14 +32,13 @@ class ZipperTest extends UnitTestCase
         $this->subject = new Zipper();
         $this->subject->setSourceDirectory(__DIR__ . '/../Fixtures/Zips');
 
-        $rootDirectory = vfsStream::setup();
-
-        vfsStream::create(['extraction' => [], 'target' => []], $rootDirectory);
-        $this->extractionDirectory = vfsStream::url('root/extraction');
-        $this->subject->setExtractionDirectory($this->extractionDirectory);
-
         // We cannot use vfsStream for this as ZipArchive does not work with it.
-        $this->targetDirectory = PATH_site . 'typo3temp/openimmo-csv-target/';
+        $this->extractionDirectory = PATH_site . 'typo3temp/openimmo-csv-extraction';
+        GeneralUtility::mkdir_deep($this->extractionDirectory);
+        $this->subject->setExtractionDirectory($this->extractionDirectory);
+        $this->testFilesToDelete[] = $this->extractionDirectory;
+
+        $this->targetDirectory = PATH_site . 'typo3temp/openimmo-csv-target';
         GeneralUtility::mkdir_deep($this->targetDirectory);
         $this->subject->setTargetDirectory($this->targetDirectory);
         $this->testFilesToDelete[] = $this->targetDirectory;
@@ -187,8 +185,9 @@ class ZipperTest extends UnitTestCase
      */
     public function createTargetZipCreatesZipFileNamedLikeSourceZip()
     {
-        $xmlDocument = new \DOMDocument('1.0', 'utf-8');
+        $this->subject->extractZip('objects.zip');
 
+        $xmlDocument = new \DOMDocument('1.0', 'utf-8');
         $targetZipPath = $this->subject->createTargetZip('objects.zip', $xmlDocument);
 
         static::assertFileExists($targetZipPath);
@@ -200,8 +199,9 @@ class ZipperTest extends UnitTestCase
      */
     public function createTargetZipDumpsOpenImmoXmlIntoTargetZip()
     {
-        $xmlDocument = new \DOMDocument('1.0', 'utf-8');
+        $this->subject->extractZip('objects.zip');
 
+        $xmlDocument = new \DOMDocument('1.0', 'utf-8');
         $targetZipPath = $this->subject->createTargetZip('objects.zip', $xmlDocument);
 
         $zip = new \ZipArchive();
@@ -209,6 +209,35 @@ class ZipperTest extends UnitTestCase
 
         static::assertInternalType('int', $zip->locateName('objects.xml'));
         static::assertSame($xmlDocument->saveXML(), $zip->getFromName('objects.xml'));
+
+        $zip->close();
+    }
+
+    /**
+     * @test
+     */
+    public function createTargetZipWithoutExtractedZipInExtractionFolderThrowsException()
+    {
+        $this->expectException(\BadMethodCallException::class);
+
+        $xmlDocument = new \DOMDocument('1.0', 'utf-8');
+        $this->subject->createTargetZip('objects.zip', $xmlDocument);
+    }
+
+    /**
+     * @test
+     */
+    public function createTargetZipCopiesJpgFilesFromExtractionFolder()
+    {
+        $this->subject->extractZip('objects.zip');
+
+        $xmlDocument = new \DOMDocument('1.0', 'utf-8');
+        $targetZipPath = $this->subject->createTargetZip('objects.zip', $xmlDocument);
+
+        $zip = new \ZipArchive();
+        static::assertTrue($zip->open($targetZipPath, \ZipArchive::CHECKCONS));
+
+        static::assertInternalType('int', $zip->locateName('00517278.jpg'));
 
         $zip->close();
     }

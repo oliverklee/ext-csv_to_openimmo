@@ -104,7 +104,7 @@ class CsvReader implements SingletonInterface
     /**
      * @param string $directory
      *
-     * @return string|null
+     * @return string|null the absolute path to the file
      */
     public function findFirstCsvFileInDirectory($directory)
     {
