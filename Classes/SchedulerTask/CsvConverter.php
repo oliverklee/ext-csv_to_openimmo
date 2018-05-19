@@ -1,6 +1,10 @@
 <?php
 namespace OliverKlee\CsvToOpenImmo\SchedulerTask;
 
+use OliverKlee\CsvToOpenImmo\Service\CsvReader;
+use OliverKlee\CsvToOpenImmo\Service\OpenImmoBuilder;
+use OliverKlee\CsvToOpenImmo\Service\Zipper;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Scheduler\Task\AbstractTask;
 
 /**
@@ -26,14 +30,14 @@ class CsvConverter extends AbstractTask
     private $deleteProcessedSourceFiles = false;
 
     /**
-     * Executes this task.
-     *
-     * @return bool true on successful execution, false on error
+     * @var Zipper
      */
-    public function execute()
-    {
-        return true;
-    }
+    private $zipper = null;
+
+    /**
+     * @var CsvReader
+     */
+    private $csvReader = null;
 
     /**
      * @return string
@@ -87,5 +91,64 @@ class CsvConverter extends AbstractTask
     public function setDeleteProcessedSourceFiles($deleteProcessedSourceFiles)
     {
         $this->deleteProcessedSourceFiles = $deleteProcessedSourceFiles;
+    }
+
+    /**
+     * @return void
+     */
+    private function initializeServices()
+    {
+        $this->zipper = GeneralUtility::makeInstance(Zipper::class);
+        $this->zipper->setSourceDirectory($this->sourceFolder);
+        $this->zipper->setTargetDirectory($this->targetFolder);
+
+        $this->csvReader = GeneralUtility::makeInstance(CsvReader::class);
+    }
+
+    /**
+     * Executes this task.
+     *
+     * @return bool true on successful execution, false on error
+     */
+    public function execute()
+    {
+        $this->initializeServices();
+        $sourceZipPaths = $this->zipper->getPathsOfZipsToExtract();
+        foreach ($sourceZipPaths as $sourceZipPath) {
+            $this->handleSingleZip($sourceZipPath);
+        }
+
+        return true;
+    }
+
+    /**
+     * @param string $sourceZipPath
+     *
+     * @return void
+     */
+    private function handleSingleZip($sourceZipPath)
+    {
+        $sourceBaseName = basename($sourceZipPath);
+        $extractionDirectory = $this->zipper->extractZip($sourceBaseName);
+        $csvFilePath = $this->csvReader->findFirstCsvFileInDirectory($extractionDirectory);
+        if ($csvFilePath === null) {
+            return;
+        }
+        $csvLines = $this->csvReader->readCsv($csvFilePath);
+        if (empty($csvLines)) {
+            return;
+        }
+
+        $openImmoBuilder = GeneralUtility::makeInstance(OpenImmoBuilder::class);
+        foreach ($csvLines as $csvLine) {
+            $openImmoBuilder->addObject($csvLine);
+        }
+        $document = $openImmoBuilder->build();
+
+        $this->zipper->createTargetZip($sourceBaseName, $document);
+
+        if ($this->getDeleteProcessedSourceFiles()) {
+            unlink($sourceZipPath);
+        }
     }
 }
