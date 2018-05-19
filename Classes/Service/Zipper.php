@@ -37,6 +37,22 @@ class Zipper implements SingletonInterface
     }
 
     /**
+     * Checks that $path exists and throws an exception otherwise.
+     *
+     * @param string $path absolute path
+     *
+     * @return void
+     *
+     * @throws \RuntimeException
+     */
+    private function checkDirectory($path)
+    {
+        if (!is_dir($path)) {
+            throw new \RuntimeException('The directory "' . $path . '" does not exist.', 1526765701);
+        }
+    }
+
+    /**
      * @return string absolute path within typo3temp
      */
     public function getExtractionDirectory()
@@ -50,6 +66,8 @@ class Zipper implements SingletonInterface
      * @param string $directory
      *
      * @return void
+     *
+     * @throws \RuntimeException
      */
     public function setExtractionDirectory($directory)
     {
@@ -86,6 +104,7 @@ class Zipper implements SingletonInterface
         if ($this->sourceDirectory === '') {
             throw new \BadMethodCallException('Please set a source directory first.', 1526320458);
         }
+        $this->checkDirectory($this->sourceDirectory);
 
         return GeneralUtility::getAllFilesAndFoldersInPath([], $this->sourceDirectory, 'zip');
     }
@@ -159,9 +178,12 @@ class Zipper implements SingletonInterface
      * @param string $pathOfZip path of a ZIP archive, must not be empty
      *
      * @return string path for a folder named like the ZIP archive, empty if the passed string is empty
+     *
+     * @throws \RuntimeException
      */
     private function getNameForExtractionFolder($pathOfZip)
     {
+        $this->checkDirectory($this->extractionDirectory);
         $relativeDirectoryName = str_ireplace('.zip', '/', basename($pathOfZip));
 
         return $this->extractionDirectory . '/' . $relativeDirectoryName;
@@ -183,9 +205,12 @@ class Zipper implements SingletonInterface
      * @param string $relativeZipPath
      *
      * @return string string
+     *
+     * @throws \RuntimeException
      */
     private function createFullZipPath($relativeZipPath)
     {
+        $this->checkDirectory($this->sourceDirectory);
         return rtrim($this->sourceDirectory, '/') . '/' . $relativeZipPath;
     }
 
@@ -211,9 +236,7 @@ class Zipper implements SingletonInterface
         if (!is_dir($extractionFolder)) {
             throw new \BadMethodCallException('Please call extractZip before calling createTargetZip.', 1526749420);
         }
-        if (!is_dir($this->targetDirectory)) {
-            throw new \RuntimeException('"' . $this->targetDirectory . '" is not a directory.', 1526682438);
-        }
+        $this->checkDirectory($this->targetDirectory);
 
         $sourceFileInfo = pathinfo($relativeSourceZipPath);
         $baseName = basename($relativeSourceZipPath, '.' . $sourceFileInfo['extension']);
