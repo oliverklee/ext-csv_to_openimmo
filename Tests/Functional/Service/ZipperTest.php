@@ -23,16 +23,27 @@ class ZipperTest extends UnitTestCase
      */
     private $extractionDirectory = '';
 
+    /**
+     * @var string
+     */
+    private $targetDirectory = '';
+
     protected function setUp()
     {
         $this->subject = new Zipper();
         $this->subject->setSourceDirectory(__DIR__ . '/../Fixtures/Zips');
 
         $rootDirectory = vfsStream::setup();
-        vfsStream::create(['extraction' => []], $rootDirectory);
-        $this->extractionDirectory = vfsStream::url('root/extraction');
 
+        vfsStream::create(['extraction' => [], 'target' => []], $rootDirectory);
+        $this->extractionDirectory = vfsStream::url('root/extraction');
         $this->subject->setExtractionDirectory($this->extractionDirectory);
+
+        // We cannot use vfsStream for this as ZipArchive does not work with it.
+        $this->targetDirectory = PATH_site . 'typo3temp/openimmo-csv-target/';
+        GeneralUtility::mkdir_deep($this->targetDirectory);
+        $this->subject->setTargetDirectory($this->targetDirectory);
+        $this->testFilesToDelete[] = $this->targetDirectory;
     }
 
     /**
@@ -169,5 +180,36 @@ class ZipperTest extends UnitTestCase
         $this->subject->removeExtractionFolderForZip('objects.zip');
 
         static::assertDirectoryNotExists($createdDirectory);
+    }
+
+    /**
+     * @test
+     */
+    public function createTargetZipCreatesZipFileNamedLikeSourceZip()
+    {
+        $xmlDocument = new \DOMDocument('1.0', 'utf-8');
+
+        $targetZipPath = $this->subject->createTargetZip('objects.zip', $xmlDocument);
+
+        static::assertFileExists($targetZipPath);
+        static::assertContains('objects-', $targetZipPath);
+    }
+
+    /**
+     * @test
+     */
+    public function createTargetZipDumpsOpenImmoXmlIntoTargetZip()
+    {
+        $xmlDocument = new \DOMDocument('1.0', 'utf-8');
+
+        $targetZipPath = $this->subject->createTargetZip('objects.zip', $xmlDocument);
+
+        $zip = new \ZipArchive();
+        static::assertTrue($zip->open($targetZipPath, \ZipArchive::CHECKCONS));
+
+        static::assertInternalType('int', $zip->locateName('objects.xml'));
+        static::assertSame($xmlDocument->saveXML(), $zip->getFromName('objects.xml'));
+
+        $zip->close();
     }
 }
