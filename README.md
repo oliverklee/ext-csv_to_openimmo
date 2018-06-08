@@ -12,10 +12,15 @@ This TYPO3 extension provides a Scheduler task that reads zipped CSV files
 from a configured folder and writes zipped OpenImmo files to another configured
 folder. The task will also copy all image files and PDF from the ZIPs.
 
+## Data format
+
 You can find the CSV column definitions in the
 [CSV Reader source code file](Classes/Service/CsvReader.php).
 
 The task will also automatically convert from ISO-9959-1 to UTF-8.
+
+This converter will automatically mark all converted objects as "for rent".
+Hence, it will not be able to convert objects that are for sale.
 
 ## Installing the extension
 

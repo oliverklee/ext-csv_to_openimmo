@@ -175,6 +175,7 @@ class RealtyObjectBuilder
         $categoryElement->appendChild($utilizationElement);
 
         $marketingTypeElement = $this->document->createElement('vermarktungsart');
+        // This is hardcoded as this converter is limited to objects that are for rent.
         $marketingTypeElement->setAttribute('KAUF', 'false');
         $marketingTypeElement->setAttribute('MIETE_PACHT', 'true');
         $categoryElement->appendChild($marketingTypeElement);
