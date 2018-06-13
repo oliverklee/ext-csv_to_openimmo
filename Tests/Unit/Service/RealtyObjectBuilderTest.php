@@ -290,6 +290,8 @@ class RealtyObjectBuilderTest extends UnitTestCase
         return [
             'numberOfRooms' => ['numberOfRooms', 'anzahl_zimmer', '3,5 Zimmer', '3.5'],
             'livingArea' => ['livingArea', 'wohnflaeche', '126,5m²', '126.5'],
+            'balcony' => ['balcony', 'anzahl_balkone', 'vorhanden', '1'],
+            'no balcony' => ['balcony', 'anzahl_balkone', 'nicht vorhanden', '0'],
         ];
     }
 
