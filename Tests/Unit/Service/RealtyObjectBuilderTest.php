@@ -384,7 +384,11 @@ class RealtyObjectBuilderTest extends UnitTestCase
     public function heatingDataProvider()
     {
         return [
-            'heatingType' => ['Fernwärme', 'false', 'false', 'false', 'true', 'false'],
+            'Fernwärme' => ['Fernwärme', 'false', 'false', 'false', 'true', 'false'],
+            'Ofenheizung' => ['Ofenheizung', 'true', 'false', 'false', 'false', 'false'],
+            'Gas dezentral' => ['Gas dezentral', 'false', 'false', 'false', 'false', 'false'],
+            'Gas zentral' => ['Gas zentral', 'false', 'false', 'true', 'false', 'false'],
+            'Öl' => ['Öl', 'false', 'false', 'false', 'false', 'false'],
         ];
     }
 
@@ -420,6 +424,44 @@ class RealtyObjectBuilderTest extends UnitTestCase
         static::assertSame($centralValue, $heatingElement->getAttribute('ZENTRAL'));
         static::assertSame($remoteValue, $heatingElement->getAttribute('FERN'));
         static::assertSame($floorValue, $heatingElement->getAttribute('FUSSBODEN'));
+    }
+
+    /**
+     * @return string[][]
+     */
+    public function firingDataProvider()
+    {
+        return [
+            'Fernwärme' => ['Fernwärme', 'false', 'false', 'true'],
+            'Ofenheizung' => ['Ofenheizung', 'false', 'false', 'false'],
+            'Gas dezentral' => ['Gas dezentral', 'false', 'true', 'false'],
+            'Gas zentral' => ['Gas zentral', 'false', 'true', 'false'],
+            'Öl' => ['Öl', 'true', 'false', 'false'],
+        ];
+    }
+
+    /**
+     * @test
+     *
+     * @param string $sourceValue
+     * @param string $oilValue
+     * @param string $gasValue
+     * @param string $remoteValue
+     * @dataProvider firingDataProvider
+     */
+    public function buildMapsFiringFields($sourceValue, $oilValue, $gasValue, $remoteValue)
+    {
+        $result = $this->subject->buildFromFields(['heatingType' => $sourceValue]);
+
+        $equipmentElement = $result->getElementsByTagName('ausstattung')->item(0);
+        static::assertNotNull($equipmentElement);
+
+        $firingElement = $equipmentElement->getElementsByTagName('befeuerung')->item(0);
+        static::assertNotNull($firingElement);
+
+        static::assertSame($oilValue, $firingElement->getAttribute('OEL'));
+        static::assertSame($gasValue, $firingElement->getAttribute('GAS'));
+        static::assertSame($remoteValue, $firingElement->getAttribute('FERN'));
     }
 
     /**
