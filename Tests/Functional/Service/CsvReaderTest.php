@@ -133,7 +133,8 @@ class CsvReaderTest extends UnitTestCase
                 [
                     'utilization' => 'Wohnraum',
                     'objectNumber' => '2117 / 1 / 16',
-                    'street' => 'Schomerusstraße 1',
+                    'street' => 'Schomerusstraße',
+                    'streetNumber' => '1',
                     'zip' => '07745',
                     'city' => 'Jena',
                     'district' => 'Winzerla',
@@ -174,7 +175,8 @@ class CsvReaderTest extends UnitTestCase
                 [
                     'utilization' => 'Wohnraum',
                     'objectNumber' => '3033 / 3 / 28',
-                    'street' => 'Fritz-Kalisch-Straße 3',
+                    'street' => 'Fritz-Kalisch-Straße',
+                    'streetNumber' => '3',
                     'zip' => '07743',
                     'city' => 'Jena',
                     'district' => 'Stadt-Nord',
