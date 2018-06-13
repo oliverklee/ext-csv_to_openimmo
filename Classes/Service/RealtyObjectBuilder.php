@@ -385,7 +385,8 @@ class RealtyObjectBuilder
         $actionElement = $this->document->createElement('aktion');
         $administrationElement->appendChild($actionElement);
 
-        $objectIdElement = $this->document->createElement('openimmo_obid', uniqid());
+        $objectId = md5($this->fieldValues['objectNumber']);
+        $objectIdElement = $this->document->createElement('openimmo_obid', $objectId);
         $administrationElement->appendChild($objectIdElement);
 
         $originElement = $this->document->createElement('kennung_ursprung');

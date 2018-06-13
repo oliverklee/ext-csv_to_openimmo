@@ -218,6 +218,21 @@ class RealtyObjectBuilderTest extends UnitTestCase
 
     /**
      * @test
+     */
+    public function buildUsesHashOfObjectNumberAsObjectId()
+    {
+        $objectNumber = 'A/B 42';
+        $this->assertChildElementValue(
+            'verwaltung_techn',
+            'objectNumber',
+            'openimmo_obid',
+            $objectNumber,
+            md5($objectNumber)
+        );
+    }
+
+    /**
+     * @test
      *
      * @param string $fieldName
      * @param string $tagName
