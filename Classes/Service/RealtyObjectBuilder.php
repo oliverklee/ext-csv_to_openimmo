@@ -29,6 +29,11 @@ class RealtyObjectBuilder
     const TYPE_BOOLEAN = 'boolean';
 
     /**
+     * @var string
+     */
+    const TYPE_EXISTENCE = 'existence';
+
+    /**
      * outmost array: OpenImmo element names
      * mid array: OpenImmo element names
      * inner array: source field name => [OpenImmo element name, type]
@@ -62,6 +67,7 @@ class RealtyObjectBuilder
         'flaechen' => [
             'livingArea' => ['wohnflaeche', self::TYPE_DECIMAL],
             'numberOfRooms' => ['anzahl_zimmer', self::TYPE_DECIMAL],
+            'balcony' => ['anzahl_balkone', self::TYPE_EXISTENCE],
         ],
         'ausstattung' => [],
         'zustand_angaben' => [
@@ -152,6 +158,9 @@ class RealtyObjectBuilder
                         break;
                     case self::TYPE_BOOLEAN:
                         $value = $this->normalizeBooleanValue($rawValue);
+                        break;
+                    case self::TYPE_EXISTENCE:
+                        $value = $this->normalizeExistenceValue($rawValue);
                         break;
                     default:
                         throw new \UnexpectedValueException(
@@ -248,6 +257,18 @@ class RealtyObjectBuilder
         $yesValues = ['true', '1', 'ja'];
 
         return in_array($rawValue, $yesValues, true) ? 'true' : 'false';
+    }
+
+    /**
+     * @param string $rawValue
+     *
+     * @return string
+     */
+    private function normalizeExistenceValue($rawValue)
+    {
+        $oneValues = ['vorhanden'];
+
+        return in_array($rawValue, $oneValues, true) ? '1' : '0';
     }
 
     /**
