@@ -12,6 +12,7 @@ This project adheres to [Semantic Versioning](https://semver.org/).
 - Add compatibility with PHP 5.5 (#23)
 
 ### Changed
+- Mark the import mode as "update" instead of "new" (#34, #41)
 
 ### Deprecated
 
