@@ -194,6 +194,7 @@ class RealtyObjectBuilder
     {
         $this->mapUtilization();
         $this->mapHeating();
+        $this->mapFiring();
         $this->mapImages();
         $this->populateTechnicalAdministrationElement();
     }
@@ -287,15 +288,37 @@ class RealtyObjectBuilder
 
         $isRemote = ($value === 'Fernwärme') ? 'true' : 'false';
         $heatingTypeElement->setAttribute('FERN', $isRemote);
-
-        $isStove = 'false';
+        $isStove = ($value === 'Ofenheizung') ? 'true' : 'false';
         $heatingTypeElement->setAttribute('OFEN', $isStove);
         $isOneFloor = 'false';
         $heatingTypeElement->setAttribute('ETAGE', $isOneFloor);
-        $isCentral = 'false';
+        $isCentral = ($value === 'Gas zentral') ? 'true' : 'false';
         $heatingTypeElement->setAttribute('ZENTRAL', $isCentral);
         $isFloor = 'false';
         $heatingTypeElement->setAttribute('FUSSBODEN', $isFloor);
+    }
+
+    /**
+     * @return void
+     */
+    private function mapFiring()
+    {
+        if (empty($this->fieldValues['heatingType'])) {
+            return;
+        }
+
+        $equipmentElement = $this->createOrFindElement('ausstattung');
+        $firingElement = $this->document->createElement('befeuerung');
+        $equipmentElement->appendChild($firingElement);
+
+        $value = $this->fieldValues['heatingType'];
+
+        $isOil = ($value === 'Öl') ? 'true' : 'false';
+        $firingElement->setAttribute('OEL', $isOil);
+        $isGas = ($value === 'Gas dezentral' || $value === 'Gas zentral') ? 'true' : 'false';
+        $firingElement->setAttribute('GAS', $isGas);
+        $isRemote = ($value === 'Fernwärme') ? 'true' : 'false';
+        $firingElement->setAttribute('FERN', $isRemote);
     }
 
     /**
