@@ -135,7 +135,8 @@ class RealtyObjectBuilderTest extends UnitTestCase
         return [
             'zip' => ['zip', 'plz', '12345', '12345'],
             'city' => ['city', 'ort', 'Kleincodingen', 'Kleincodingen'],
-            'street' => ['street', 'strasse', 'Am Eck 42', 'Am Eck 42'],
+            'street' => ['street', 'strasse', 'Am Eck', 'Am Eck'],
+            'street number' => ['streetNumber', 'hausnummer', '42', '42'],
             'district' => ['district', 'regionaler_zusatz', 'Nordstadt', 'Nordstadt'],
             'floor' => ['floor', 'etage', '3. Stock', '3'],
             'numberOfFloors' => ['numberOfFloors', 'anzahl_etagen', '5 Etagen', '5'],

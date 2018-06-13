@@ -41,6 +41,7 @@ class RealtyObjectBuilder
             'zip' => ['plz', self::TYPE_STRING],
             'city' => ['ort', self::TYPE_STRING],
             'street' => ['strasse', self::TYPE_STRING],
+            'streetNumber' => ['hausnummer', self::TYPE_STRING],
             'floor' => ['etage', self::TYPE_INTEGER],
             'numberOfFloors' => ['anzahl_etagen', self::TYPE_INTEGER],
             'district' => ['regionaler_zusatz', self::TYPE_STRING],
