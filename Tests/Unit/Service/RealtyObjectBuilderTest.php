@@ -484,6 +484,51 @@ class RealtyObjectBuilderTest extends UnitTestCase
     /**
      * @return string[][]
      */
+    public function parkingSpaceDataProvider()
+    {
+        return [
+            'Garage' => ['Garage', 'true', 'false', 'false', 'false'],
+            'Tiefgarage' => ['Tiefgarage', 'false', 'true', 'false', 'false'],
+            'Stellplatz' => ['Stellplatz', 'false', 'false', 'true', 'false'],
+            'Parkhaus' => ['Parkhaus', 'false', 'false', 'false', 'true'],
+            'nicht vorhanden' => ['nicht vorhanden', 'false', 'false', 'false', 'false'],
+        ];
+    }
+
+    /**
+     * @test
+     *
+     * @param string $sourceValue
+     * @param string $garageValue
+     * @param string $undergroundValue
+     * @param string $parkingSpaceValue
+     * @param string $parkingGarageValue
+     * @dataProvider parkingSpaceDataProvider
+     */
+    public function buildMapsParkingSpaceFields(
+        $sourceValue,
+        $garageValue,
+        $undergroundValue,
+        $parkingSpaceValue,
+        $parkingGarageValue
+    ) {
+        $result = $this->subject->buildFromFields(['parkingSpaceType' => $sourceValue]);
+
+        $equipmentElement = $result->getElementsByTagName('ausstattung')->item(0);
+        static::assertNotNull($equipmentElement);
+
+        $packingSpaceElement = $equipmentElement->getElementsByTagName('stellplatzart')->item(0);
+        static::assertNotNull($packingSpaceElement);
+
+        static::assertSame($garageValue, $packingSpaceElement->getAttribute('GARAGE'));
+        static::assertSame($undergroundValue, $packingSpaceElement->getAttribute('TIEFGARAGE'));
+        static::assertSame($parkingSpaceValue, $packingSpaceElement->getAttribute('FREIPLATZ'));
+        static::assertSame($parkingGarageValue, $packingSpaceElement->getAttribute('PARKHAUS'));
+    }
+
+    /**
+     * @return string[][]
+     */
     public function imagesDataProvider()
     {
         return [

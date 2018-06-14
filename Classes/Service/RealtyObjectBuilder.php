@@ -204,6 +204,7 @@ class RealtyObjectBuilder
         $this->mapUtilization();
         $this->mapHeating();
         $this->mapFiring();
+        $this->mapParkingSpaceType();
         $this->mapImages();
         $this->populateTechnicalAdministrationElement();
     }
@@ -340,6 +341,31 @@ class RealtyObjectBuilder
         $firingElement->setAttribute('GAS', $isGas);
         $isRemote = ($value === 'Fernwärme') ? 'true' : 'false';
         $firingElement->setAttribute('FERN', $isRemote);
+    }
+
+    /**
+     * @return void
+     */
+    private function mapParkingSpaceType()
+    {
+        if (empty($this->fieldValues['parkingSpaceType'])) {
+            return;
+        }
+
+        $equipmentElement = $this->createOrFindElement('ausstattung');
+        $parkingSpaceElement = $this->document->createElement('stellplatzart');
+        $equipmentElement->appendChild($parkingSpaceElement);
+
+        $value = $this->fieldValues['parkingSpaceType'];
+
+        $isGarage = ($value === 'Garage') ? 'true' : 'false';
+        $parkingSpaceElement->setAttribute('GARAGE', $isGarage);
+        $isUnderground = ($value === 'Tiefgarage') ? 'true' : 'false';
+        $parkingSpaceElement->setAttribute('TIEFGARAGE', $isUnderground);
+        $isParkingSpace = ($value === 'Stellplatz') ? 'true' : 'false';
+        $parkingSpaceElement->setAttribute('FREIPLATZ', $isParkingSpace);
+        $isParkingGarage = ($value === 'Parkhaus') ? 'true' : 'false';
+        $parkingSpaceElement->setAttribute('PARKHAUS', $isParkingGarage);
     }
 
     /**
