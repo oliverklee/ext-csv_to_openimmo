@@ -364,26 +364,11 @@ class RealtyObjectBuilderTest extends UnitTestCase
     }
 
     /**
-     * @return string[][]
-     */
-    public function utilizationDataProvider()
-    {
-        return [
-            'Wohnen' => ['Wohnraum', 'true', 'false'],
-        ];
-    }
-
-    /**
      * @test
-     *
-     * @param string $sourceValue
-     * @param string $habitationValue
-     * @param string $businessValue
-     * @dataProvider utilizationDataProvider
      */
-    public function buildMapsUtilizationFields($sourceValue, $habitationValue, $businessValue)
+    public function buildSetsAllUtilizationFieldsToFalse()
     {
-        $result = $this->subject->buildFromFields(['utilization' => $sourceValue]);
+        $result = $this->subject->buildFromFields([]);
 
         $categoryElement = $result->getElementsByTagName('objektkategorie')->item(0);
         static::assertNotNull($categoryElement);
@@ -391,8 +376,8 @@ class RealtyObjectBuilderTest extends UnitTestCase
         $utilizationElement = $categoryElement->getElementsByTagName('nutzungsart')->item(0);
         static::assertNotNull($utilizationElement);
 
-        static::assertSame($habitationValue, $utilizationElement->getAttribute('WOHNEN'));
-        static::assertSame($businessValue, $utilizationElement->getAttribute('GEWERBE'));
+        static::assertSame('false', $utilizationElement->getAttribute('WOHNEN'));
+        static::assertSame('false', $utilizationElement->getAttribute('GEWERBE'));
     }
 
     /**
