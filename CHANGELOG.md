@@ -20,3 +20,4 @@ This project adheres to [Semantic Versioning](https://semver.org/).
 ### Removed
 
 ### Fixed
+- Always set all utilization types to false (#50, #49)

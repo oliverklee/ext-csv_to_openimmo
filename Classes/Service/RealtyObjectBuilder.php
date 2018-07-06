@@ -277,20 +277,10 @@ class RealtyObjectBuilder
      */
     private function mapUtilization()
     {
-        if (empty($this->fieldValues['utilization'])) {
-            return;
-        }
-
         $categoryElement = $this->createOrFindElement('objektkategorie');
         $utilizationElement = $categoryElement->getElementsByTagName('nutzungsart')->item(0);
-
-        $value = $this->fieldValues['utilization'];
-
-        $isHabitation = ($value === 'Wohnraum') ? 'true' : 'false';
-        $utilizationElement->setAttribute('WOHNEN', $isHabitation);
-
-        $isBusiness = 'false';
-        $utilizationElement->setAttribute('GEWERBE', $isBusiness);
+        $utilizationElement->setAttribute('WOHNEN', 'false');
+        $utilizationElement->setAttribute('GEWERBE', 'false');
     }
 
     /**
