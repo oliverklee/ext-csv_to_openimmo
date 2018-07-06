@@ -205,6 +205,7 @@ class RealtyObjectBuilder
         $this->mapHeating();
         $this->mapFiring();
         $this->mapParkingSpaceType();
+        $this->mapElevator();
         $this->mapImages();
         $this->populateTechnicalAdministrationElement();
     }
@@ -356,6 +357,21 @@ class RealtyObjectBuilder
         $parkingSpaceElement->setAttribute('FREIPLATZ', $isParkingSpace);
         $isParkingGarage = ($value === 'Parkhaus') ? 'true' : 'false';
         $parkingSpaceElement->setAttribute('PARKHAUS', $isParkingGarage);
+    }
+
+    /**
+     * @return void
+     */
+    private function mapElevator()
+    {
+        if ($this->normalizeExistenceValue($this->fieldValues['elevator']) === '0') {
+            return;
+        }
+
+        $equipmentElement = $this->createOrFindElement('ausstattung');
+        $elevatorElement = $this->document->createElement('fahrstuhl');
+        $equipmentElement->appendChild($elevatorElement);
+        $elevatorElement->setAttribute('PERSONEN', 'true');
     }
 
     /**

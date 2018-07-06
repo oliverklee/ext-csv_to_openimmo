@@ -34,7 +34,6 @@ The following OpenImmo fields currently are not imported:
 
 - vermarktungsart (will always be "MIETE_PACHT")
 - object type (will always be "wohnung")
-- elevator (as it is a free-text field in the CSV file)
 - garage (as it is a free-text field in the CSV file)
 - balcony (as it is a free-text field in the CSV file)
 - other image types than JPEG
