@@ -63,11 +63,25 @@ class RealtyObjectBuilderTest extends UnitTestCase
     }
 
     /**
-     * @test
+     * @return string[][]
      */
-    public function buildFromFieldsAlwaysHasObjectTypeElementSetToFlat()
+    public function nonParkingUtilizationDataProvider()
     {
-        $result = $this->subject->buildFromFields([]);
+        return [
+            'Wohnraum' => ['Wohnraum'],
+            'other' => ['Big Mac'],
+        ];
+    }
+
+    /**
+     * @test
+     *
+     * @param string $utilization
+     * @dataProvider nonParkingUtilizationDataProvider
+     */
+    public function buildFromFieldsForNonParkingUtilizationSetsObjectTypeElementToFlat($utilization)
+    {
+        $result = $this->subject->buildFromFields(['utilization' => $utilization]);
 
         $categoryField = $result->getElementsByTagName('objektkategorie')->item(0);
         static::assertNotNull($categoryField);
@@ -77,6 +91,77 @@ class RealtyObjectBuilderTest extends UnitTestCase
 
         $flatElement = $objectTypeElement->getElementsByTagName('wohnung')->item(0);
         static::assertNotNull($flatElement);
+    }
+
+    /**
+     * @test
+     *
+     * @param string $utilization
+     * @dataProvider nonParkingUtilizationDataProvider
+     */
+    public function buildFromFieldsForNonParkingUtilizationNotSetsObjectTypeElementToParking($utilization)
+    {
+        $result = $this->subject->buildFromFields(['utilization' => $utilization]);
+
+        $categoryField = $result->getElementsByTagName('objektkategorie')->item(0);
+        static::assertNotNull($categoryField);
+
+        $objectTypeElement = $categoryField->getElementsByTagName('objektart')->item(0);
+        static::assertNotNull($objectTypeElement);
+
+        $parkingElement = $objectTypeElement->getElementsByTagName('parken')->item(0);
+        static::assertNull($parkingElement);
+    }
+
+    /**
+     * @return string[][]
+     */
+    public function parkingUtilizationDataProvider()
+    {
+        return [
+            'Stellplatz' => ['Stellplatz'],
+            'Garage' => ['Garage'],
+        ];
+    }
+
+    /**
+     * @test
+     *
+     * @param string $utilization
+     * @dataProvider parkingUtilizationDataProvider
+     */
+    public function buildFromFieldsForParkingUtilizationSetsObjectTypeElementToParking($utilization)
+    {
+        $result = $this->subject->buildFromFields(['utilization' => $utilization]);
+
+        $categoryField = $result->getElementsByTagName('objektkategorie')->item(0);
+        static::assertNotNull($categoryField);
+
+        $objectTypeElement = $categoryField->getElementsByTagName('objektart')->item(0);
+        static::assertNotNull($objectTypeElement);
+
+        $parkingElement = $objectTypeElement->getElementsByTagName('parken')->item(0);
+        static::assertNotNull($parkingElement);
+    }
+
+    /**
+     * @test
+     *
+     * @param string $utilization
+     * @dataProvider parkingUtilizationDataProvider
+     */
+    public function buildFromFieldsForParkingUtilizationNotSetsObjectTypeElementToFlat($utilization)
+    {
+        $result = $this->subject->buildFromFields(['utilization' => $utilization]);
+
+        $categoryField = $result->getElementsByTagName('objektkategorie')->item(0);
+        static::assertNotNull($categoryField);
+
+        $objectTypeElement = $categoryField->getElementsByTagName('objektart')->item(0);
+        static::assertNotNull($objectTypeElement);
+
+        $flatElement = $objectTypeElement->getElementsByTagName('wohnung')->item(0);
+        static::assertNull($flatElement);
     }
 
     /**

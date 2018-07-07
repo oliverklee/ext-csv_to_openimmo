@@ -89,6 +89,11 @@ class RealtyObjectBuilder
     ];
 
     /**
+     * @var string[]
+     */
+    private static $parkingObjectTypes = ['Stellplatz', 'Garage'];
+
+    /**
      * @var \DOMDocument
      */
     private $document = null;
@@ -189,11 +194,6 @@ class RealtyObjectBuilder
         $marketingTypeElement->setAttribute('KAUF', 'false');
         $marketingTypeElement->setAttribute('MIETE_PACHT', 'true');
         $categoryElement->appendChild($marketingTypeElement);
-
-        $objectTypeElement = $this->document->createElement('objektart');
-        $flatElement = $this->document->createElement('wohnung');
-        $objectTypeElement->appendChild($flatElement);
-        $categoryElement->appendChild($objectTypeElement);
     }
 
     /**
@@ -207,7 +207,8 @@ class RealtyObjectBuilder
         $this->mapParkingSpaceType();
         $this->mapElevator();
         $this->mapImages();
-        $this->populateTechnicalAdministrationElement();
+        $this->populateTechnicalAdministration();
+        $this->populateObjectType();
     }
 
     /**
@@ -410,7 +411,7 @@ class RealtyObjectBuilder
     /**
      * @return void
      */
-    private function populateTechnicalAdministrationElement()
+    private function populateTechnicalAdministration()
     {
         $administrationElement = $this->createOrFindElement('verwaltung_techn');
 
@@ -426,5 +427,24 @@ class RealtyObjectBuilder
 
         $changeDateElement = $this->document->createElement('stand_vom', date('Y-m-d'));
         $administrationElement->appendChild($changeDateElement);
+    }
+
+    /**
+     * @return void
+     */
+    private function populateObjectType()
+    {
+        $categoryElement = $this->createOrFindElement('objektkategorie');
+        $objectTypeElement = $this->document->createElement('objektart');
+
+        if (in_array($this->fieldValues['utilization'], self::$parkingObjectTypes, true)) {
+            $separateTypeElementName = 'parken';
+        } else {
+            $separateTypeElementName = 'wohnung';
+        }
+
+        $separateTypeElement = $this->document->createElement($separateTypeElementName);
+        $objectTypeElement->appendChild($separateTypeElement);
+        $categoryElement->appendChild($objectTypeElement);
     }
 }
