@@ -14,6 +14,7 @@ This project adheres to [Semantic Versioning](https://semver.org/).
 - Add compatibility with PHP 5.5 (#23)
 
 ### Changed
+- Convert balcony and patio as one field (#47, #52)
 - Mark the import mode as "update" instead of "new" (#34, #41)
 
 ### Deprecated

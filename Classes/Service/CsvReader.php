@@ -51,7 +51,7 @@ class CsvReader implements SingletonInterface
         33 => 'description',
         34 => 'equipment',
         35 => 'elevator',
-        36 => 'balcony',
+        36 => 'balcony_or_patio',
         46 => 'parkingSpaceType',
         49 => 'contactPersonSalutation',
         50 => 'contactPersonFullName',
