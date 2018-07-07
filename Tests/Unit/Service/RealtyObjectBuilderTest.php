@@ -467,6 +467,50 @@ class RealtyObjectBuilderTest extends UnitTestCase
     }
 
     /**
+     * @test
+     */
+    public function buildMapsExistingElevator()
+    {
+        $result = $this->subject->buildFromFields(['elevator' => 'vorhanden']);
+
+        $equipmentElement = $result->getElementsByTagName('ausstattung')->item(0);
+        static::assertNotNull($equipmentElement);
+
+        $elevatorElement = $equipmentElement->getElementsByTagName('fahrstuhl')->item(0);
+        static::assertNotNull($elevatorElement);
+
+        static::assertSame('true', $elevatorElement->getAttribute('PERSONEN'));
+    }
+
+    /**
+     * @return string[][]
+     */
+    public function noElevatorDataProvider()
+    {
+        return [
+            'inexistent' => ['nicht vorhanden'],
+            'empty string' => [''],
+        ];
+    }
+
+    /**
+     * @test
+     *
+     * @param string $sourceValue
+     * @dataProvider noElevatorDataProvider
+     */
+    public function buildMapsNonExistingElevator($sourceValue)
+    {
+        $result = $this->subject->buildFromFields(['elevator' => $sourceValue]);
+
+        $equipmentElement = $result->getElementsByTagName('ausstattung')->item(0);
+        static::assertNotNull($equipmentElement);
+
+        $elevatorElement = $equipmentElement->getElementsByTagName('fahrstuhl')->item(0);
+        static::assertNull($elevatorElement);
+    }
+
+    /**
      * @return string[][]
      */
     public function parkingSpaceDataProvider()
