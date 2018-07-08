@@ -165,7 +165,7 @@ class RealtyObjectBuilder
                         $value = $this->normalizeBooleanValue($rawValue);
                         break;
                     case self::TYPE_EXISTENCE:
-                        $value = $this->normalizeExistenceValue($rawValue);
+                        $value = $this->normalizeExistenceValueToNumber($rawValue);
                         break;
                     default:
                         throw new \UnexpectedValueException(
@@ -265,13 +265,23 @@ class RealtyObjectBuilder
     /**
      * @param string $rawValue
      *
-     * @return string
+     * @return string "1" or "0"
      */
-    private function normalizeExistenceValue($rawValue)
+    private function normalizeExistenceValueToNumber($rawValue)
+    {
+        return $this->normalizeExistenceValueToBoolean($rawValue) ? '1' : '0';
+    }
+
+    /**
+     * @param string $rawValue
+     *
+     * @return bool
+     */
+    private function normalizeExistenceValueToBoolean($rawValue)
     {
         $oneValues = ['vorhanden'];
 
-        return in_array($rawValue, $oneValues, true) ? '1' : '0';
+        return in_array($rawValue, $oneValues, true);
     }
 
     /**
@@ -365,7 +375,7 @@ class RealtyObjectBuilder
      */
     private function mapElevator()
     {
-        if ($this->normalizeExistenceValue($this->fieldValues['elevator']) === '0') {
+        if (!$this->normalizeExistenceValueToBoolean($this->fieldValues['elevator'])) {
             return;
         }
 
