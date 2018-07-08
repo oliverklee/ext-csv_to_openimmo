@@ -292,7 +292,8 @@ class RealtyObjectBuilder
         $categoryElement = $this->createOrFindElement('objektkategorie');
         $utilizationElement = $categoryElement->getElementsByTagName('nutzungsart')->item(0);
         $utilizationElement->setAttribute('WOHNEN', 'false');
-        $utilizationElement->setAttribute('GEWERBE', 'false');
+        $isCommercial = $this->fieldValues['utilization'] === 'gewerbliche Nutzung';
+        $utilizationElement->setAttribute('GEWERBE', $isCommercial ? 'true' : 'false');
     }
 
     /**

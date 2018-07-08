@@ -451,7 +451,7 @@ class RealtyObjectBuilderTest extends UnitTestCase
     /**
      * @test
      */
-    public function buildSetsAllUtilizationFieldsToFalse()
+    public function buildSetsHabitationUtilizationFieldsToFalse()
     {
         $result = $this->subject->buildFromFields([]);
 
@@ -462,6 +462,54 @@ class RealtyObjectBuilderTest extends UnitTestCase
         static::assertNotNull($utilizationElement);
 
         static::assertSame('false', $utilizationElement->getAttribute('WOHNEN'));
+    }
+
+    /**
+     * @test
+     */
+    public function buildForCommercialUtilizationSetsCommercialUtilizationFieldsToTrue()
+    {
+        $result = $this->subject->buildFromFields(['utilization' => 'gewerbliche Nutzung']);
+
+        $categoryElement = $result->getElementsByTagName('objektkategorie')->item(0);
+        static::assertNotNull($categoryElement);
+
+        $utilizationElement = $categoryElement->getElementsByTagName('nutzungsart')->item(0);
+        static::assertNotNull($utilizationElement);
+
+        static::assertSame('true', $utilizationElement->getAttribute('GEWERBE'));
+    }
+
+    /**
+     * @return string[][]
+     */
+    public function nonCommercialUtilizationDataProvider()
+    {
+        return [
+            'Garage' => ['Garage'],
+            'Stellplatz' => ['Stellplatz'],
+            'Wohnraum' => ['Wohnraum'],
+            'somethine else' => ['somethine else'],
+            'empty string' => [''],
+        ];
+    }
+
+    /**
+     * @test
+     *
+     * @param string $utilization
+     * @dataProvider nonCommercialUtilizationDataProvider
+     */
+    public function buildForNonCommercialUtilizationSetsCommercialUtilizationFieldsToFalse($utilization)
+    {
+        $result = $this->subject->buildFromFields(['utilization' => $utilization]);
+
+        $categoryElement = $result->getElementsByTagName('objektkategorie')->item(0);
+        static::assertNotNull($categoryElement);
+
+        $utilizationElement = $categoryElement->getElementsByTagName('nutzungsart')->item(0);
+        static::assertNotNull($utilizationElement);
+
         static::assertSame('false', $utilizationElement->getAttribute('GEWERBE'));
     }
 
