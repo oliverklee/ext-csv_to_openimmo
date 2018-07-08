@@ -6,6 +6,7 @@ This project adheres to [Semantic Versioning](https://semver.org/).
 ## x.y.z
 
 ### Added
+- Also convert "commercial use" (#31, #56)
 - Convert the elevator field (#51, #43)
 - Convert parking space types (#36, #42)
 - Convert the number of balconies (#26, #40)
