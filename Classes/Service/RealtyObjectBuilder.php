@@ -47,7 +47,6 @@ class RealtyObjectBuilder
             'city' => ['ort', self::TYPE_STRING],
             'street' => ['strasse', self::TYPE_STRING],
             'streetNumber' => ['hausnummer', self::TYPE_STRING],
-            'floor' => ['etage', self::TYPE_INTEGER],
             'numberOfFloors' => ['anzahl_etagen', self::TYPE_INTEGER],
             'district' => ['regionaler_zusatz', self::TYPE_STRING],
         ],
@@ -78,6 +77,7 @@ class RealtyObjectBuilder
             'location' => ['lage', self::TYPE_STRING],
             'equipment' => ['ausstatt_beschr', self::TYPE_STRING],
             'description' => ['objektbeschreibung', self::TYPE_STRING],
+            'floor' => ['sonstige_angaben', self::TYPE_STRING],
         ],
         'anhaenge' => [],
         'verwaltung_objekt' => [

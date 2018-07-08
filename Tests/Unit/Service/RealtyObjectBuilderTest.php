@@ -223,7 +223,6 @@ class RealtyObjectBuilderTest extends UnitTestCase
             'street' => ['street', 'strasse', 'Am Eck', 'Am Eck'],
             'street number' => ['streetNumber', 'hausnummer', '42', '42'],
             'district' => ['district', 'regionaler_zusatz', 'Nordstadt', 'Nordstadt'],
-            'floor' => ['floor', 'etage', '3. Stock', '3'],
             'numberOfFloors' => ['numberOfFloors', 'anzahl_etagen', '5 Etagen', '5'],
         ];
     }
@@ -252,6 +251,7 @@ class RealtyObjectBuilderTest extends UnitTestCase
             'description' => ['description', 'objektbeschreibung', 'Wohnst du noch oder lebst do schon?'],
             'equipment' => ['equipment', 'ausstatt_beschr', 'Diese Wohnung hat alles, was das Herz begehrt.'],
             'location' => ['location', 'lage', 'Direkt in der Innenstadt'],
+            'floor' => ['floor', 'sonstige_angaben', '1. Obergeschoss / Dachgeschoss,'],
         ];
     }
 
