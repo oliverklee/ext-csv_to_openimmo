@@ -32,9 +32,9 @@ please make sure to name the extension directory `csv_to_openimmo`, not
 
 The following OpenImmo fields currently are not imported:
 
-- vermarktungsart (will always be "MIETE_PACHT")
+- "vermarktungsart" (will always be "MIETE_PACHT")
 - other image types than JPEG
-- the type of transfer (will always be "VOLL")
+- the type of transfer ("uebertragung > umfang", will always be "TEIL")
 
 ## Sponsorship
 
