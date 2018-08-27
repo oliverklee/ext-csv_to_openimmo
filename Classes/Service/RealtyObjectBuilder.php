@@ -207,6 +207,7 @@ class RealtyObjectBuilder
         $this->mapParkingSpaceType();
         $this->mapElevator();
         $this->mapImages();
+        $this->populateObjectAdministration();
         $this->populateTechnicalAdministration();
         $this->populateObjectType();
     }
@@ -438,6 +439,22 @@ class RealtyObjectBuilder
 
         $changeDateElement = $this->document->createElement('stand_vom', date('Y-m-d'));
         $administrationElement->appendChild($changeDateElement);
+    }
+
+    /**
+     * @return void
+     */
+    private function populateObjectAdministration()
+    {
+        $administrationElement = $this->createOrFindElement('verwaltung_objekt');
+        $firstChild = $administrationElement->childNodes->item(0);
+
+        $showAddressElement = $this->document->createElement('objektadresse_freigeben', 'true');
+        if ($firstChild !== null) {
+            $administrationElement->insertBefore($showAddressElement, $firstChild);
+        } else {
+            $administrationElement->appendChild($showAddressElement);
+        }
     }
 
     /**
