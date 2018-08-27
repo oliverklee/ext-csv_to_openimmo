@@ -34,7 +34,7 @@ The following OpenImmo fields currently are not imported:
 
 - "vermarktungsart" (will always be "MIETE_PACHT")
 - other image types than JPEG
-- the type of transfer ("uebertragung > umfang", will always be "TEIL")
+- the type of transfer ("uebertragung > umfang", will always be "VOLL")
 
 ## Sponsorship
 
