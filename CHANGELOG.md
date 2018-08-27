@@ -16,6 +16,7 @@ This project adheres to [Semantic Versioning](https://semver.org/).
 - Add compatibility with PHP 5.5 (#23)
 
 ### Changed
+- Change the OpenImmo transfer type from "partial" to "full" (#65)
 - Convert the floor as a free-text field (#48, #57)
 - Also use "parking" for the object type (#46, #53)
 - Convert balcony and patio as one field (#47, #52)

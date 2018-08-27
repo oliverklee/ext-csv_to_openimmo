@@ -28,4 +28,15 @@ class OpenImmoBuilderTest extends UnitTestCase
     {
         static::assertInstanceOf(\DOMDocument::class, $this->subject->build());
     }
+
+    /**
+     * @test
+     */
+    public function transferTypeIsFull()
+    {
+        $document = $this->subject->build();
+        $transferNode = $document->getElementsByTagName('uebertragung')->item(0);
+
+        static::assertSame('VOLL', $transferNode->getAttribute('umfang'));
+    }
 }
