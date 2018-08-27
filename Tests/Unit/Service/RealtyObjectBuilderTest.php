@@ -360,6 +360,21 @@ class RealtyObjectBuilderTest extends UnitTestCase
     }
 
     /**
+     * @test
+     */
+    public function buildMakesAddressAvailable()
+    {
+        $result = $this->subject->buildFromFields([]);
+
+        $parentElement = $result->getElementsByTagName('verwaltung_objekt')->item(0);
+        static::assertNotNull($parentElement);
+
+        $childElement = $parentElement->getElementsByTagName('objektadresse_freigeben')->item(0);
+        static::assertNotNull($childElement);
+        static::assertSame('true', $childElement->nodeValue);
+    }
+
+    /**
      * @return string[][]
      */
     public function stateDataProvider()

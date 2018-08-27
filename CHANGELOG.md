@@ -6,6 +6,7 @@ This project adheres to [Semantic Versioning](https://semver.org/).
 ## x.y.z
 
 ### Added
+- Always mark the object address as visible (#62, #63)
 - Also convert "commercial use" (#31, #56)
 - Convert the elevator field (#51, #43)
 - Convert parking space types (#36, #42)
