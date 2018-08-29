@@ -13,6 +13,8 @@ env:
   matrix:
   - TYPO3_VERSION="^7.6" DEPENDENCIES=latest
   - TYPO3_VERSION="^7.6" DEPENDENCIES=oldest
+  - TYPO3_VERSION="^8.7" DEPENDENCIES=latest
+  - TYPO3_VERSION="^8.7" DEPENDENCIES=oldest
 
 cache:
   directories:

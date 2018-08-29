@@ -6,6 +6,7 @@ This project adheres to [Semantic Versioning](https://semver.org/).
 ## x.y.z
 
 ### Added
+- Add compatibility with TYPO3 CMS 8.7 (#70)
 - Convert the "habitation" utilization type (#68, #61)
 - Always mark the object address as visible (#62, #63)
 - Also convert "commercial use" (#31, #56)
