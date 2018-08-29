@@ -466,9 +466,41 @@ class RealtyObjectBuilderTest extends UnitTestCase
     /**
      * @test
      */
-    public function buildSetsHabitationUtilizationFieldsToFalse()
+    public function buildConvertsHabitationUtilizationField()
     {
-        $result = $this->subject->buildFromFields([]);
+        $result = $this->subject->buildFromFields(['utilization' => 'Wohnung']);
+
+        $categoryElement = $result->getElementsByTagName('objektkategorie')->item(0);
+        static::assertNotNull($categoryElement);
+
+        $utilizationElement = $categoryElement->getElementsByTagName('nutzungsart')->item(0);
+        static::assertNotNull($utilizationElement);
+
+        static::assertSame('true', $utilizationElement->getAttribute('WOHNEN'));
+    }
+
+    /**
+     * @return string[][]
+     */
+    public function nonHabitationUtilizationDataProvider()
+    {
+        return [
+            'emptyx string' => [''],
+            'commercial' => ['gewerbliche Nutzung'],
+            'parking' => ['Parkplatz'],
+            'storage' => ['Lagerhaus'],
+        ];
+    }
+
+    /**
+     * @test
+     *
+     * @param string $utilization
+     * @dataProvider nonHabitationUtilizationDataProvider
+     */
+    public function buildConvertsNonHabitationUtilizationToNoHabitation($utilization)
+    {
+        $result = $this->subject->buildFromFields(['utilization' => $utilization]);
 
         $categoryElement = $result->getElementsByTagName('objektkategorie')->item(0);
         static::assertNotNull($categoryElement);
