@@ -91,7 +91,22 @@ class RealtyObjectBuilder
     /**
      * @var string[]
      */
-    private static $parkingObjectTypes = ['Stellplatz', 'Garage'];
+    private static $parkingObjectTypes = ['Stellplatz', 'Garage', 'Parken', 'parken'];
+
+    /**
+     * @var string[]
+     */
+    private static $commercialUtilizationTypes = ['gewerbe', 'Gewerbe', 'gewerbliche Nutzung'];
+
+    /**
+     * @var string[]
+     */
+    private static $habitationUtilizationTypes = ['Wohnraum', 'wohnraum', 'Wohnung', 'wohnung'];
+
+    /**
+     * @var string[]
+     */
+    private static $officeUtilizationTypes = ['buero_praxen'];
 
     /**
      * @var \DOMDocument
@@ -292,9 +307,9 @@ class RealtyObjectBuilder
     {
         $categoryElement = $this->createOrFindElement('objektkategorie');
         $utilizationElement = $categoryElement->getElementsByTagName('nutzungsart')->item(0);
-        $isHabitation = $this->fieldValues['utilization'] === 'Wohnung';
+        $isHabitation = in_array($this->fieldValues['utilization'], static::$habitationUtilizationTypes, true);
         $utilizationElement->setAttribute('WOHNEN', $isHabitation ? 'true' : 'false');
-        $isCommercial = $this->fieldValues['utilization'] === 'gewerbliche Nutzung';
+        $isCommercial = in_array($this->fieldValues['utilization'], static::$commercialUtilizationTypes, true);
         $utilizationElement->setAttribute('GEWERBE', $isCommercial ? 'true' : 'false');
     }
 
@@ -463,17 +478,23 @@ class RealtyObjectBuilder
      */
     private function populateObjectType()
     {
-        $categoryElement = $this->createOrFindElement('objektkategorie');
-        $objectTypeElement = $this->document->createElement('objektart');
-
-        if (in_array($this->fieldValues['utilization'], self::$parkingObjectTypes, true)) {
+        $utilization = $this->fieldValues['utilization'];
+        if (in_array($utilization, self::$parkingObjectTypes, true)) {
             $separateTypeElementName = 'parken';
-        } else {
+        } elseif (in_array($utilization, self::$habitationUtilizationTypes, true)) {
             $separateTypeElementName = 'wohnung';
+        } elseif (in_array($utilization, self::$officeUtilizationTypes, true)) {
+            $separateTypeElementName = 'buero_praxen';
+        } else {
+            $separateTypeElementName = '';
         }
 
-        $separateTypeElement = $this->document->createElement($separateTypeElementName);
-        $objectTypeElement->appendChild($separateTypeElement);
-        $categoryElement->appendChild($objectTypeElement);
+        if ($separateTypeElementName !== '') {
+            $objectTypeElement = $this->document->createElement('objektart');
+            $typeElement = $this->document->createElement($separateTypeElementName);
+            $objectTypeElement->appendChild($typeElement);
+            $categoryElement = $this->createOrFindElement('objektkategorie');
+            $categoryElement->appendChild($objectTypeElement);
+        }
     }
 }
