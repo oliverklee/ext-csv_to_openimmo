@@ -30,6 +30,8 @@ This project adheres to [Semantic Versioning](https://semver.org/).
 ### Removed
 
 ### Fixed
+- Create valid OpenImmo for commercial objects (#75, #77)
+- Convert only balconies, not balconies and patios combined (#76)
 - Add the missing dependency on ext-libxml (#66)
 - Add the missing dependency on ext-dom (#64)
 - Always set all utilization types to false (#50, #49)
