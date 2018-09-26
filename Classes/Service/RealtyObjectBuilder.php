@@ -66,7 +66,7 @@ class RealtyObjectBuilder
         'flaechen' => [
             'livingArea' => ['wohnflaeche', self::TYPE_DECIMAL],
             'numberOfRooms' => ['anzahl_zimmer', self::TYPE_DECIMAL],
-            'balcony_or_patio' => ['anzahl_balkon_terrassen', self::TYPE_EXISTENCE],
+            'balcony_or_patio' => ['anzahl_balkone', self::TYPE_EXISTENCE],
         ],
         'ausstattung' => [],
         'zustand_angaben' => [

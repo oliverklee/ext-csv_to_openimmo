@@ -105,6 +105,51 @@ class OpenImmoBuilderTest extends UnitTestCase
         'imageTitle 05' => '',
     ];
 
+    /**
+     * @var string[]
+     */
+    private static $objectDataThree = [
+        'utilization' => 'wohnung',
+        'objectNumber' => '236/92/73',
+        'street' => 'Fritz-Kalisch-Straße 3',
+        'zip' => '07743',
+        'city' => 'Jena',
+        'district' => 'Stadt-Nord',
+        'yearOfConstruction' => '1962',
+        'numberOfFloors' => '',
+        'availabilityDate' => '01.11.2018',
+        'floor' => '1. Obergeschoss',
+        'numberOfRooms' => '4',
+        'livingArea' => '68,35',
+        'heatingType' => 'Fernwärme',
+        'rentWithoutHeatingCosts' => '430',
+        'additionalCosts' => '140',
+        'heatingIncludedInAdditionalCosts' => 'ja',
+        'rentWithHeatingCosts' => '570',
+        'deposit' => 'kautionsfrei',
+        'title' => 'Familienfreundliche 4-Raum-Wohnung im grünen Stadtteil Nord',
+        'location' => 'Naumburger Straße 9, 07743 Jena',
+        'description' => 'Das Gebäude befindet sich im Stadtteil Jena-Nord.',
+        'equipment' => 'Das 5-geschossige Mehrfamilienhaus mit Satteldach wurde umfassend saniert.',
+        'elevator' => 'nicht vorhanden',
+        'balcony_or_patio' => 'nicht vorhanden',
+        'parkingSpaceType' => '',
+        'contactPersonSalutation' => 'Frau',
+        'contactPersonFullName' => 'Annett Doe',
+        'contactPersonPhoneNumber' => '+49 3641 884469',
+        'contactPersonEmail' => 'stadtmitte@example.com',
+        'imageFileName 01' => '00535445.jpg',
+        'imageTitle 01' => 'Objektbild',
+        'imageFileName 02' => '00539003.jpg',
+        'imageTitle 02' => '',
+        'imageFileName 03' => '00535488.jpg',
+        'imageTitle 03' => 'Straßenbild',
+        'imageFileName 04' => '',
+        'imageTitle 04' => '',
+        'imageFileName 05' => '',
+        'imageTitle 05' => '',
+    ];
+
     protected function setUp()
     {
         $this->subject = new OpenImmoBuilder();
@@ -165,12 +210,27 @@ class OpenImmoBuilderTest extends UnitTestCase
     /**
      * @test
      */
-    public function documentWithBothObjectsIsValid()
+    public function documentWithThirdObjectIsValid()
+    {
+        $this->skipForNoSchemaFile();
+
+        $this->subject->addObject(self::$objectDataThree);
+        $document = $this->subject->build();
+
+        $document->schemaValidate($this->schemaPath);
+        static::assertSame([], libxml_get_errors());
+    }
+
+    /**
+     * @test
+     */
+    public function documentWithAllObjectsIsValid()
     {
         $this->skipForNoSchemaFile();
 
         $this->subject->addObject(self::$objectDataOne);
         $this->subject->addObject(self::$objectDataTwo);
+        $this->subject->addObject(self::$objectDataThree);
         $document = $this->subject->build();
 
         $document->schemaValidate($this->schemaPath);
