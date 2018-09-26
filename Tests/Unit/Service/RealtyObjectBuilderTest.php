@@ -185,6 +185,42 @@ class RealtyObjectBuilderTest extends UnitTestCase
     }
 
     /**
+     * @return string[][]
+     */
+    public function otherUtilizationDataProvider()
+    {
+        return [
+            'gewerbe' => ['gewerbe'],
+            'Gewerbe' => ['Gewerbe'],
+            'sonstige' => ['sonstige'],
+            'Sonstige' => ['Sonstige'],
+            'sonstiges' => ['sonstiges'],
+            'Sonstiges' => ['Sonstiges'],
+            '(empty string)' => [''],
+        ];
+    }
+
+    /**
+     * @test
+     *
+     * @param string $utilization
+     * @dataProvider otherUtilizationDataProvider
+     */
+    public function buildFromFieldsForOtherUtilizationSetsObjectTypeElementToOther($utilization)
+    {
+        $result = $this->subject->buildFromFields(['utilization' => $utilization]);
+
+        $categoryElement = $result->getElementsByTagName('objektkategorie')->item(0);
+        static::assertNotNull($categoryElement);
+
+        $objectTypeElement = $categoryElement->getElementsByTagName('objektart')->item(0);
+        static::assertNotNull($objectTypeElement);
+
+        $otherUtilizationElement = $objectTypeElement->getElementsByTagName('sonstige')->item(0);
+        static::assertNotNull($otherUtilizationElement);
+    }
+
+    /**
      * @test
      *
      * @param string $utilization

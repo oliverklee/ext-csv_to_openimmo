@@ -486,15 +486,13 @@ class RealtyObjectBuilder
         } elseif (in_array($utilization, self::$officeUtilizationTypes, true)) {
             $separateTypeElementName = 'buero_praxen';
         } else {
-            $separateTypeElementName = '';
+            $separateTypeElementName = 'sonstige';
         }
 
-        if ($separateTypeElementName !== '') {
-            $objectTypeElement = $this->document->createElement('objektart');
-            $typeElement = $this->document->createElement($separateTypeElementName);
-            $objectTypeElement->appendChild($typeElement);
-            $categoryElement = $this->createOrFindElement('objektkategorie');
-            $categoryElement->appendChild($objectTypeElement);
-        }
+        $objectTypeElement = $this->document->createElement('objektart');
+        $typeElement = $this->document->createElement($separateTypeElementName);
+        $objectTypeElement->appendChild($typeElement);
+        $categoryElement = $this->createOrFindElement('objektkategorie');
+        $categoryElement->appendChild($objectTypeElement);
     }
 }
