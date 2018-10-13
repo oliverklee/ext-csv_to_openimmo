@@ -6,6 +6,7 @@ This project adheres to [Semantic Versioning](https://semver.org/).
 ## x.y.z
 
 ### Added
+- Auto-release to the TER (#78)
 - Convert more utilization types (#73, #74)
 - Add compatibility with TYPO3 CMS 8.7 (#70)
 - Convert the "habitation" utilization type (#68, #61)
