@@ -17,6 +17,9 @@ folder. The task will also copy all image files and PDF from the ZIPs.
 You can find the CSV column definitions in the
 [CSV Reader source code file](Classes/Service/CsvReader.php).
 
+The functional tests also include an
+[example CSV file](Tests/Functional/Fixtures/CorrectCsv/objects.csv).
+
 The task will also automatically convert from ISO-9959-1 to UTF-8.
 
 This converter will automatically mark all converted objects as "for rent".
