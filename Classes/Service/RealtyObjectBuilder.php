@@ -161,10 +161,6 @@ class RealtyObjectBuilder
         foreach (static::$elementMapping as $elementName => $fieldMappings) {
             $parentElement = $this->createOrFindElement($elementName);
             foreach ($fieldMappings as $sourceFieldName => list($targetElementName, $type)) {
-                if (empty($this->fieldValues[$sourceFieldName])) {
-                    continue;
-                }
-
                 $rawValue = $this->fieldValues[$sourceFieldName];
                 switch ($type) {
                     case self::TYPE_STRING:
@@ -250,6 +246,10 @@ class RealtyObjectBuilder
      */
     private function normalizeDecimalValue($rawValue)
     {
+        if ($rawValue === '') {
+            return '0.0';
+        }
+
         $withDecimalPoints = str_replace(',', '.', $rawValue);
         $nonDecimalCharactersPattern = '/[^\\d\\.]/';
 

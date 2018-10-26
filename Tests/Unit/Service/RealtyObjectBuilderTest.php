@@ -247,9 +247,13 @@ class RealtyObjectBuilderTest extends UnitTestCase
     {
         return [
             'contactPersonSalutation' => ['contactPersonSalutation', 'anrede', 'Frau'],
+            'empty contactPersonSalutation' => ['contactPersonSalutation', 'anrede', ''],
             'contactPersonFullName' => ['contactPersonFullName', 'name', 'Kate Doe'],
+            'empty contactPersonFullName' => ['contactPersonFullName', 'name', ''],
             'contactPersonPhoneNumber' => ['contactPersonPhoneNumber', 'tel_durchw', '+49 1111 123123-22'],
+            'empty contactPersonPhoneNumber' => ['contactPersonPhoneNumber', 'tel_durchw', ''],
             'contactPersonEmail' => ['contactPersonEmail', 'email_zentrale', 'kate@example.com'],
+            'empty contactPersonEmail' => ['contactPersonEmail', 'email_zentrale', ''],
         ];
     }
 
@@ -295,11 +299,17 @@ class RealtyObjectBuilderTest extends UnitTestCase
     {
         return [
             'zip' => ['zip', 'plz', '12345', '12345'],
+            'empty zip' => ['zip', 'plz', '', ''],
             'city' => ['city', 'ort', 'Kleincodingen', 'Kleincodingen'],
+            'empty city' => ['city', 'ort', '', ''],
             'street' => ['street', 'strasse', 'Am Eck', 'Am Eck'],
+            'empty street' => ['street', 'strasse', '', ''],
             'street number' => ['streetNumber', 'hausnummer', '42', '42'],
+            'empty street number' => ['streetNumber', 'hausnummer', '', ''],
             'district' => ['district', 'regionaler_zusatz', 'Nordstadt', 'Nordstadt'],
+            'empty district' => ['district', 'regionaler_zusatz', '', ''],
             'numberOfFloors' => ['numberOfFloors', 'anzahl_etagen', '5 Etagen', '5'],
+            'empty numberOfFloors' => ['numberOfFloors', 'anzahl_etagen', '', '0'],
         ];
     }
 
@@ -323,11 +333,16 @@ class RealtyObjectBuilderTest extends UnitTestCase
     public function freeTextDataProvider()
     {
         return [
-            'title' => ['title', 'objekttitel', 'Maisonette-Wohnung mit 2 Bädern und Sauna (unbeheizt)'],
-            'description' => ['description', 'objektbeschreibung', 'Wohnst du noch oder lebst do schon?'],
-            'equipment' => ['equipment', 'ausstatt_beschr', 'Diese Wohnung hat alles, was das Herz begehrt.'],
-            'location' => ['location', 'lage', 'Direkt in der Innenstadt'],
-            'floor' => ['floor', 'sonstige_angaben', '1. Obergeschoss / Dachgeschoss,'],
+            'non-empty title' => ['title', 'objekttitel', 'Maisonette-Wohnung mit 2 Bädern und Sauna (unbeheizt)'],
+            'empty title' => ['title', 'objekttitel', ''],
+            'non-empty description' => ['description', 'objektbeschreibung', 'Wohnst du noch oder lebst do schon?'],
+            'empty description' => ['description', 'objektbeschreibung', ''],
+            'non-empty equipment' => ['equipment', 'ausstatt_beschr', 'Diese Wohnung hat alles, was das Herz begehrt.'],
+            'empty equipment' => ['equipment', 'ausstatt_beschr', ''],
+            'non-empty location' => ['location', 'lage', 'Direkt in der Innenstadt'],
+            'empty location' => ['location', 'lage', ''],
+            'non-empty floor' => ['floor', 'sonstige_angaben', '1. Obergeschoss / Dachgeschoss,'],
+            'empty floor' => ['floor', 'sonstige_angaben', ''],
         ];
     }
 
@@ -351,6 +366,7 @@ class RealtyObjectBuilderTest extends UnitTestCase
     {
         return [
             'availabilityDate' => ['availabilityDate', 'verfuegbar_ab', 'ab Anfang Oktober'],
+            'empty availabilityDate' => ['availabilityDate', 'verfuegbar_ab', ''],
         ];
     }
 
@@ -374,6 +390,7 @@ class RealtyObjectBuilderTest extends UnitTestCase
     {
         return [
             'objectNumber' => ['objectNumber', 'objektnr_extern', 'A/B 42'],
+            'empty objectNumber' => ['objectNumber', 'objektnr_extern', ''],
         ];
     }
 
@@ -457,6 +474,7 @@ class RealtyObjectBuilderTest extends UnitTestCase
     {
         return [
             'yearOfConstruction' => ['yearOfConstruction', 'baujahr', '1968'],
+            'empty yearOfConstruction' => ['yearOfConstruction', 'baujahr', '0'],
         ];
     }
 
@@ -480,7 +498,9 @@ class RealtyObjectBuilderTest extends UnitTestCase
     {
         return [
             'numberOfRooms' => ['numberOfRooms', 'anzahl_zimmer', '3,5 Zimmer', '3.5'],
+            'empty numberOfRooms' => ['numberOfRooms', 'anzahl_zimmer', '', '0.0'],
             'livingArea' => ['livingArea', 'wohnflaeche', '126,5m²', '126.5'],
+            'empty livingArea' => ['livingArea', 'wohnflaeche', '', '0.0'],
             'balcony_or_patio' => ['balcony_or_patio', 'anzahl_balkone', 'vorhanden', '1'],
             'no balcony' => ['balcony_or_patio', 'anzahl_balkone', 'nicht vorhanden', '0'],
         ];
