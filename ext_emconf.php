@@ -8,7 +8,7 @@ $EM_CONF[$_EXTKEY] = [
     'author_company' => 'oliverklee.de',
     'state' => 'beta',
     'createDirs' => 'typo3temp/csv_to_openimmo',
-    'version' => '1.0.x-dev',
+    'version' => '1.0.0',
     'constraints' =>
         [
             'depends' =>

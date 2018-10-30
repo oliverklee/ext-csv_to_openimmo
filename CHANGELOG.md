@@ -6,6 +6,18 @@ This project adheres to [Semantic Versioning](https://semver.org/).
 ## x.y.z
 
 ### Added
+
+### Changed
+
+### Deprecated
+
+### Removed
+
+### Fixed
+
+## 1.0.0
+
+### Added
 - Auto-release to the TER (#78)
 - Convert more utilization types (#73, #74)
 - Add compatibility with TYPO3 CMS 8.7 (#70)
@@ -26,10 +38,6 @@ This project adheres to [Semantic Versioning](https://semver.org/).
 - Also use "parking" for the object type (#46, #53)
 - Convert balcony and patio as one field (#47, #52)
 - Mark the import mode as "update" instead of "new" (#34, #41)
-
-### Deprecated
-
-### Removed
 
 ### Fixed
 - Also create OpenImmo nodes for empty data (#84)
