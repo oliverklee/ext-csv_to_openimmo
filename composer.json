@@ -31,10 +31,8 @@
         "ext-dom": "*",
         "ext-libxml": "*",
 
-        "typo3/cms-core": "^6.2.0 || ^7.6.23 || ^8.7.9",
-        "typo3/cms-fluid": "^6.2.0 || ^7.6.23 || ^8.7.9",
-        "typo3/cms-frontend": "^6.2.0 || ^7.6.23 || ^8.7.9",
-        "typo3/cms-scheduler": "^6.2.0 || ^7.6.23 || ^8.7.9"
+        "typo3/cms-core": "^7.6.23 || ^8.7.9",
+        "typo3/cms-scheduler": "^7.6.23 || ^8.7.9"
     },
     "require-dev": {
         "nimut/testing-framework": "^4.1.3",
