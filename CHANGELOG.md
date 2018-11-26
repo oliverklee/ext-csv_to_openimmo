@@ -6,6 +6,7 @@ This project adheres to [Semantic Versioning](https://semver.org/).
 ## x.y.z
 
 ### Added
+- Add a test case with a minimal valid OpenImmo file (#88)
 
 ### Changed
 - Streamline ext_emconf.php (#86)

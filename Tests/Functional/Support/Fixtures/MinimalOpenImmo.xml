@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<openimmo>
+    <uebertragung art="ONLINE" umfang="VOLL" modus="CHANGE" version="1.2.7"
+                  sendersoftware="TYPO3 CSV-to-OpenImmo converter" senderversion="1.0.0"/>
+    <anbieter>
+        <!-- Expected is one of ( anbieternr, firma ) -->
+        <firma></firma>
+        <openimmo_anid></openimmo_anid>
+        <immobilie>
+            <objektkategorie>
+                <!-- optional attributes: ANLAGE, WAZ -->
+                <nutzungsart WOHNEN="true" GEWERBE="true"/>
+                <!-- optional attributes: ERBPACHT, LEASING -->
+                <vermarktungsart KAUF="true" MIETE_PACHT="true"/>
+                <objektart>
+                    <!--
+                        Expected is one of ( zimmer, wohnung, haus, grundstueck, buero_praxen, einzelhandel,
+                        gastgewerbe, hallen_lager_prod, land_und_forstwirtschaft, parken )
+                    -->
+                    <zimmer/>
+                </objektart>
+            </objektkategorie>
+            <geo>
+                <plz></plz>
+            </geo>
+            <kontaktperson>
+                <email_zentrale>info@example.com</email_zentrale>
+                <name></name>
+            </kontaktperson>
+            <!-- This section is optional, but an object without it does not make much sense. -->
+            <freitexte>
+                <objekttitel></objekttitel>
+                <objektbeschreibung></objektbeschreibung>
+            </freitexte>
+            <verwaltung_techn>
+                <objektnr_extern></objektnr_extern>
+                <aktion/>
+                <openimmo_obid></openimmo_obid>
+                <stand_vom>2018-11-26</stand_vom>
+            </verwaltung_techn>
+        </immobilie>
+    </anbieter>
+</openimmo>
