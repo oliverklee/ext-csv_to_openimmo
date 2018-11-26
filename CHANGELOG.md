@@ -17,6 +17,7 @@ This project adheres to [Semantic Versioning](https://semver.org/).
 - Require TYPO3 >= 7.6 (#87)
 
 ### Fixed
+- Also provide the extension icon in `Resources/` (#89)
 
 ## 1.0.0
 
