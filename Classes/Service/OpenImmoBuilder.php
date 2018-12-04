@@ -17,7 +17,7 @@ class OpenImmoBuilder
      */
     const BASIC_XML = '
         <openimmo>
-            <uebertragung art="ONLINE" umfang="VOLL" modus="CHANGE" version="1.2.7" sendersoftware="TYPO3 CSV-to-OpenImmo converter" senderversion="1.0.0"/>
+            <uebertragung art="ONLINE" umfang="VOLL" modus="CHANGE" version="1.2.7" sendersoftware="TYPO3 CSV-to-OpenImmo converter" senderversion="2.0.0"/>
             <anbieter>
                 <anbieternr/>
                 <firma/>
