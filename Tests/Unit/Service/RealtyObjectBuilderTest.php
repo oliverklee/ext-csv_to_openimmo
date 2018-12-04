@@ -334,6 +334,8 @@ class RealtyObjectBuilderTest extends UnitTestCase
     {
         return [
             'non-empty title' => ['title', 'objekttitel', 'Maisonette-Wohnung mit 2 Bädern und Sauna (unbeheizt)'],
+            'title with ampersand' => ['title', 'objekttitel', 'A & B'],
+            'title with quotes' => ['title', 'objekttitel', 'Hello "world"'],
             'empty title' => ['title', 'objekttitel', ''],
             'non-empty description' => ['description', 'objektbeschreibung', 'Wohnst du noch oder lebst do schon?'],
             'empty description' => ['description', 'objektbeschreibung', ''],
