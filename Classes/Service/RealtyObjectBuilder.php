@@ -184,7 +184,9 @@ class RealtyObjectBuilder
                             1526661439
                         );
                 }
-                $child = $this->document->createElement($targetElementName, $value);
+                $textNode = $this->document->createTextNode($value);
+                $child = $this->document->createElement($targetElementName);
+                $child->appendChild($textNode);
                 $parentElement->appendChild($child);
             }
         }
