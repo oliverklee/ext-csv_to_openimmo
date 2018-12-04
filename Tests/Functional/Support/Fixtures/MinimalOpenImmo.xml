@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <openimmo>
     <uebertragung art="ONLINE" umfang="VOLL" modus="CHANGE" version="1.2.7"
-                  sendersoftware="TYPO3 CSV-to-OpenImmo converter" senderversion="1.0.0"/>
+                  sendersoftware="TYPO3 CSV-to-OpenImmo converter" senderversion="2.0.0"/>
     <anbieter>
         <!-- Expected is one of ( anbieternr, firma ) -->
         <firma></firma>

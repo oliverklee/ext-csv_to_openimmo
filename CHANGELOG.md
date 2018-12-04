@@ -6,12 +6,22 @@ This project adheres to [Semantic Versioning](https://semver.org/).
 ## x.y.z
 
 ### Added
+
+### Changed
+
+### Deprecated
+
+### Removed
+
+### Fixed
+
+## 2.0.0
+
+### Added
 - Add a test case with a minimal valid OpenImmo file (#88)
 
 ### Changed
 - Streamline ext_emconf.php (#86)
-
-### Deprecated
 
 ### Removed
 - Require TYPO3 >= 7.6 (#87)
