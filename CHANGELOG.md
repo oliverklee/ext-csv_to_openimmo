@@ -14,6 +14,7 @@ This project adheres to [Semantic Versioning](https://semver.org/).
 ### Removed
 
 ### Fixed
+- Explicitly provide the extension name in the composer.json (#94)
 
 ## 2.0.0
 

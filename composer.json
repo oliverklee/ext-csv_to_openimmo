@@ -100,6 +100,7 @@
             "dev-master": "2.0.x-dev"
         },
         "typo3/cms": {
+            "extension-key": "csv_to_openimmo",
             "cms-package-dir": "{$vendor-dir}/typo3/cms",
             "web-dir": ".Build/public"
         }
