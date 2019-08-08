@@ -15,7 +15,8 @@ This project adheres to [Semantic Versioning](https://semver.org/).
 ### Removed
 
 ### Fixed
-- Properly quote the PHP version strings in .travis.yml (#97)
+- Drop an obsolete "replace" entry from composer.json (#97)
+- Properly quote the PHP version strings in .travis.yml (#96)
 - Explicitly provide the extension name in the composer.json (#94)
 
 ## 2.0.0

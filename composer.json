@@ -40,7 +40,6 @@
         "helhum/typo3-composer-setup": "^0.5.3"
     },
     "replace": {
-        "csv_to_openimmo": "self.version",
         "typo3-ter/ext-csv_to_openimmo": "self.version"
     },
     "suggest": {
