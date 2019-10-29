@@ -31,6 +31,7 @@ This project adheres to [Semantic Versioning](https://semver.org/).
 - Streamline ext_emconf.php (#86)
 
 ### Removed
+- Drop unneeded Travis CI configuration settings (#102)
 - Require TYPO3 >= 7.6 (#87)
 
 ### Fixed
