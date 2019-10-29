@@ -2,10 +2,6 @@ sudo: false
 
 language: php
 
-env:
-  global:
-  - TYPO3_PATH_ROOT=$PWD/.Build/public
-
 cache:
   directories:
   - .Build/vendor
