@@ -6,6 +6,7 @@ This project adheres to [Semantic Versioning](https://semver.org/).
 ## x.y.z
 
 ### Added
+- Run the functional tests in parallel (#98)
 
 ### Changed
 - Change from GPL V3+ to GPL V2+ (#95)
