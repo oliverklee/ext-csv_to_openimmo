@@ -16,7 +16,7 @@ before_install:
 
 install:
 - >
-  composer require typo3/minimal:"$TYPO3" --prefer-stable --prefer-dist $DEPENDENCIES_PREFERENCE;
+  composer require typo3/minimal:"$TYPO3";
   composer show;
 - >
   echo;
@@ -45,38 +45,20 @@ jobs:
     php: "7.2"
     env: TYPO3=^8.7
   - stage: test
-    php: "7.2"
-    env: TYPO3=^8.7 DEPENDENCIES_PREFERENCE="--prefer-lowest"
-  - stage: test
     php: "7.1"
     env: TYPO3=^8.7
-  - stage: test
-    php: "7.1"
-    env: TYPO3=^8.7 DEPENDENCIES_PREFERENCE="--prefer-lowest"
   - stage: test
     php: "7.0"
     env: TYPO3=^8.7
   - stage: test
-    php: "7.0"
-    env: TYPO3=^8.7 DEPENDENCIES_PREFERENCE="--prefer-lowest"
-  - stage: test
     php: "7.2"
     env: TYPO3=^7.6
-  - stage: test
-    php: "7.2"
-    env: TYPO3=^7.6 DEPENDENCIES_PREFERENCE="--prefer-lowest"
   - stage: test
     php: "7.1"
     env: TYPO3=^7.6
   - stage: test
-    php: "7.1"
-    env: TYPO3=^7.6 DEPENDENCIES_PREFERENCE="--prefer-lowest"
-  - stage: test
     php: "7.0"
     env: TYPO3=^7.6
-  - stage: test
-    php: "7.0"
-    env: TYPO3=^7.6 DEPENDENCIES_PREFERENCE="--prefer-lowest"
   - stage: release to ter
     if: tag IS present AND env(TYPO3_ORG_USERNAME) IS present AND env(TYPO3_ORG_PASSWORD) IS present
     php: "7.0"

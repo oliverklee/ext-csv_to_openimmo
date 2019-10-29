@@ -13,6 +13,7 @@ This project adheres to [Semantic Versioning](https://semver.org/).
 ### Deprecated
 
 ### Removed
+- Stop running with different dependency versions (#99)
 
 ### Fixed
 - Drop an obsolete "replace" entry from composer.json (#97)
