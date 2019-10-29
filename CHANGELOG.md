@@ -14,6 +14,7 @@ This project adheres to [Semantic Versioning](https://semver.org/).
 ### Deprecated
 
 ### Removed
+- Drop unneeded Travis CI configuration settings (#102, #103)
 - Remove the TER as Composer repository (#100)
 - Stop running with different dependency versions (#99)
 
@@ -31,7 +32,6 @@ This project adheres to [Semantic Versioning](https://semver.org/).
 - Streamline ext_emconf.php (#86)
 
 ### Removed
-- Drop unneeded Travis CI configuration settings (#102)
 - Require TYPO3 >= 7.6 (#87)
 
 ### Fixed
