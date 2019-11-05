@@ -8,6 +8,7 @@ This project adheres to [Semantic Versioning](https://semver.org/).
 ### Added
 
 ### Changed
+- Sort the Composer dependencies (#105)
 - Simplify the Composer dependency versions (#101)
 - Change from GPL V3+ to GPL V2+ (#95)
 
