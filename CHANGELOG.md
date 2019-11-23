@@ -8,6 +8,7 @@ This project adheres to [Semantic Versioning](https://semver.org/).
 ### Added
 
 ### Changed
+- Run the TER release script with PHP 7.2 (#106)
 - Sort the Composer dependencies (#105)
 - Simplify the Composer dependency versions (#101)
 - Change from GPL V3+ to GPL V2+ (#95)
