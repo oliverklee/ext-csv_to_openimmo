@@ -21,6 +21,7 @@ This project adheres to [Semantic Versioning](https://semver.org/).
 - Stop running with different dependency versions (#99)
 
 ### Fixed
+- Do not cache `vendor/` on Travis CI (#107)
 - Drop an obsolete "replace" entry from composer.json (#97)
 - Properly quote the PHP version strings in .travis.yml (#96)
 - Explicitly provide the extension name in the composer.json (#94)
