@@ -21,6 +21,7 @@ This project adheres to [Semantic Versioning](https://semver.org/).
 - Stop running with different dependency versions (#99)
 
 ### Fixed
+- Always use Composer-installed versions of the dev tools (#109)
 - Fix warnings in the `.travis.yml` (#108)
 - Do not cache `vendor/` on Travis CI (#107)
 - Drop an obsolete "replace" entry from composer.json (#97)
