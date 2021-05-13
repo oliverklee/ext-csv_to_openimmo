@@ -1,6 +1,6 @@
 # CSV-to-OpenImmo converter
 
-[![Build Status](https://travis-ci.org/oliverklee/ext-csv_to_openimmo.svg?branch=master)](https://travis-ci.org/oliverklee/ext-csv_to_openimmo)
+[![Build Status](https://travis-ci.org/oliverklee/ext-csv_to_openimmo.svg?branch=main)](https://travis-ci.org/oliverklee/ext-csv_to_openimmo)
 [![Latest Stable Version](https://poser.pugx.org/oliverklee/csv_to_openimmo/v/stable.svg)](https://packagist.org/packages/oliverklee/csv_to_openimmo)
 [![Total Downloads](https://poser.pugx.org/oliverklee/csv_to_openimmo/downloads.svg)](https://packagist.org/packages/oliverklee/csv_to_openimmo)
 [![Latest Unstable Version](https://poser.pugx.org/oliverklee/csv_to_openimmo/v/unstable.svg)](https://packagist.org/packages/oliverklee/csv_to_openimmo)
