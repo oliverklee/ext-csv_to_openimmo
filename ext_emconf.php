@@ -1,5 +1,5 @@
 <?php
-$EM_CONF[$_EXTKEY] = [
+$EM_CONF['csv_to_openimmo'] = [
     'title' => 'CSV-to-OpenImmo converter',
     'description' => 'This extension provides a Scheduler task that reads zipped CSV files from a configured folder and writes zipped OpenImmo files to another configured folder. The task will also copy all image files and PDF from the ZIPs.',
     'version' => '2.0.0',
